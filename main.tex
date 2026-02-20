@@ -1,19 +1,27 @@
- 
 % Compile with: pdfLaTeX
 
-\documentclass[10pt, export]{article}
+% DBF Rule: 10pt font, 8.5x11 (letter) paper
+\documentclass[10pt, letterpaper]{article}
 
-% ---------- Packages (unchanged) ----------
+% ---------- Essential Packages (De-duplicated) ----------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{helvet} % DBF Rule: Arial-like font
+\renewcommand{\familydefault}{\sfdefault}
+
+\usepackage{geometry}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
 \usepackage{setspace}
 \usepackage{titlesec}
-\usepackage{caption,float}
+\usepackage{caption}
+\usepackage{float}
 \usepackage{booktabs}
 \usepackage[table]{xcolor}
-\usepackage{colortbl,array,ragged2e}
+\usepackage{colortbl}
+\usepackage{array}
+\usepackage{ragged2e}
 \usepackage{tcolorbox}
-\usepackage{geometry}
 \usepackage{wrapfig}
 \usepackage{placeins}
 \usepackage{tocloft}
@@ -21,63 +29,17 @@
 \usepackage{lastpage} 
 \usepackage{multirow}
 \usepackage{tabularx}
-\usepackage{array}
-\usepackage{amsmath}
-\usepackage{placeins} % for \FloatBarrier
-\usepackage{wrapfig}
-\usepackage{graphicx}
-\usepackage{caption}
-\usepackage{graphicx}
-\usepackage{caption}
-\usepackage{float}
-\usepackage{array}
-\usepackage{booktabs}
-\usepackage{comment}
-\usepackage{tabularx}
-\usepackage{multirow}
-\usepackage{array}
 \usepackage{makecell}
-
-
-
-
-
-\definecolor{myblue}{HTML}{A0D3ED}
-\definecolor{myred}{HTML}{DA2B24}
-\definecolor{myyellow}{HTML}{BA8E23}
-\definecolor{y}{HTML}{F9D56E}
-\definecolor{lb}{HTML}{A0D3ED}
-\definecolor{db}{HTML}{1E417C}
-
 \usepackage[export]{adjustbox} % Provides valign option for \includegraphics
-\renewcommand{\arraystretch}{1.15}
-\renewcommand{\arraystretch}{1.0}
-\setlength{\tabcolsep}{4pt}
-\makeatletter
-\renewcommand{\refname}{}
-\makeatother
-\usepackage[utf8]{inputenc}
-\usepackage{multirow}
-\usepackage{array}
-
-
-% ---------- Math ----------
-\usepackage{amsmath,amssymb,amsfonts}
-\usepackage{mathtools}
+\usepackage{amsmath,amssymb,amsfonts,mathtools}
 \usepackage{bm}
 \usepackage{siunitx}
-\sisetup{detect-all}
-
-% ---------- Font (Arial-like) ----------
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{helvet}
-\renewcommand{\familydefault}{\sfdefault}
-
-% ---------- Hyperlinks ----------
 \usepackage[hidelinks]{hyperref}
+\usepackage{multirow}
+\usepackage{hhline}
+\usepackage[table]{xcolor}
 
-% ---------- Geometry (Letter 8.5" x 11") ----------
+% ---------- Geometry (8.5 x 11, Custom Margins) ----------
 \geometry{
   paperwidth=8.5in,
   paperheight=11in,
@@ -86,23 +48,30 @@
   bottom=0.75in
 }
 
-% ---------- Editable global spacing ----------
-\newcommand{\BodyLineStretch}{1.5} 
-\setstretch{\BodyLineStretch}
+% ---------- Global Spacing (DBF Rule: 1.5 Spacing) ----------
+\onehalfspacing % This is the mathematically correct 1.5 spacing in LaTeX
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{4pt}
 
+\sisetup{detect-all}
+\renewcommand{\arraystretch}{1.15} % Slight padding for tables
+\setlength{\tabcolsep}{4pt}
+
 % Reserve space so header/footer do not collide with body/wrapfig
-\setlength{\headheight}{24pt}
+\setlength{\headheight}{28pt} % Increased to safely fit the 0.9cm BITS logo
 \setlength{\footskip}{24pt}
 
-% ---------- TOC/numbering ----------
+% ---------- Headings & Numbering ----------
 \setcounter{tocdepth}{2}    
 \setcounter{secnumdepth}{4} 
 
-% ----------------------------
-% Colors (OVERRIDE using provided palette)
-% ----------------------------
+% ---------- Colors ----------
+\definecolor{myblue}{HTML}{A0D3ED}
+\definecolor{myred}{HTML}{DA2B24}
+\definecolor{myyellow}{HTML}{BA8E23}
+\definecolor{y}{HTML}{F9D56E}
+\definecolor{lb}{HTML}{A0D3ED}
+\definecolor{db}{HTML}{1E417C}
 \definecolor{bitsRed}{HTML}{CF2027}    
 \definecolor{bitsGold}{HTML}{B78A2D} 
 \definecolor{bitsBlue}{HTML}{1E417C}
@@ -110,51 +79,39 @@
 \definecolor{DBFDark}{HTML}{2F2D8F}     
 \definecolor{DBFLine}{HTML}{5EC9E9}     
 
-% ----------------------------
-% Editable font sizes 
-% ----------------------------
-\newcommand{\BodySize}{\fontsize{10}{12}\selectfont}   % 10pt body
-\newcommand{\HFourSize}{\fontsize{10}{12}\selectfont}  % a.b.c.d (paragraph)
-\newcommand{\HThreeSize}{\fontsize{11}{13}\selectfont} % a.b.c (subsubsection)
-\newcommand{\HTwoSize}{\fontsize{13}{16}\selectfont}   % a.b (subsection)
-\newcommand{\HOneSize}{\fontsize{15}{18}\selectfont}   % a (section)
+% ---------- Editable Font Sizes ----------
+\newcommand{\BodySize}{\fontsize{10}{12}\selectfont}   
+\newcommand{\HFourSize}{\fontsize{10}{12}\selectfont}  
+\newcommand{\HThreeSize}{\fontsize{11}{13}\selectfont} 
+\newcommand{\HTwoSize}{\fontsize{13}{16}\selectfont}   
+\newcommand{\HOneSize}{\fontsize{15}{18}\selectfont}   
 
 \AtBeginDocument{\BodySize}
 
-% ----------------------------
-% Headings (10,11,13,15)
-% ----------------------------
-\titleformat{\section}
-  {\color{bitsBlue}\bfseries\HOneSize}
-  {\thesection.}{0.6em}{}
-\titleformat{\subsection}
-  {\color{bitsBlue}\bfseries\HTwoSize}
-  {\thesubsection}{0.6em}{}
-\titleformat{\subsubsection}
-  {\color{bitsBlue}\bfseries\HThreeSize}
-  {\thesubsubsection}{0.6em}{}
-\titleformat{\paragraph}[block]
-  {\color{bitsBlue}\bfseries\HFourSize}
-  {\theparagraph}{0.6em}{}
+% ---------- Heading Formatting ----------
+\titleformat{\section}{\color{bitsBlue}\bfseries\HOneSize}{\thesection.}{0.6em}{}
+\titleformat{\subsection}{\color{bitsBlue}\bfseries\HTwoSize}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\color{bitsBlue}\bfseries\HThreeSize}{\thesubsubsection}{0.6em}{}
+\titleformat{\paragraph}[block]{\color{bitsBlue}\bfseries\HFourSize}{\theparagraph}{0.6em}{}
 
-% Heading spacing 
 \titlespacing*{\section}{0pt}{10pt}{6pt}
 \titlespacing*{\subsection}{0pt}{8pt}{5pt}
 \titlespacing*{\subsubsection}{0pt}{7pt}{4pt}
 \titlespacing*{\paragraph}{0pt}{6pt}{2pt}
 
-% ----------------------------
-% Captions
-% ----------------------------
+% ---------- Captions ----------
 \captionsetup{
   font=small,
   labelfont=bf,
   labelsep=colon
 }
 
-% ----------------------------
-% Header / Footer
-% ----------------------------
+% ---------- References / Bibliography ----------
+\makeatletter
+\renewcommand{\refname}{}
+\makeatother
+
+% ---------- Header / Footer (Custom BITS Pilani) ----------
 \pagestyle{fancy}
 \fancyhf{}
 
@@ -168,11 +125,8 @@
 \lhead{\includegraphics[height=0.9cm]{BITS_logo.png}\hspace{0.6em}}
 \chead{\textcolor{bitsBlue}{\bfseries\normalsize BITS Pilani, K.K. Birla Goa Campus}}
 \rhead{\textcolor{myyellow}{\bfseries\normalsize AIAA DBF}}
+\lfoot{\raisebox{-0.25cm}{\includegraphics[height=0.8cm]{logo_peggy.png}}}
 
-
-\lfoot{\includegraphics[height=0.8cm]{logo_peggy.png}}
-
-% Page numbering
 \rfoot{%
   \NoHyper
   \textcolor{DBFDark}{\bfseries\normalsize \thepage\ of \pageref*{LastPage}}%
@@ -186,10 +140,7 @@
   \hbox to\headwidth{\color{DBFLine}\leaders\hrule height \headrulewidth\hfill}%
 }
 
-% ----------------------------
-% TOC styling 
-% ----------------------------
-% Base TOC layout (kept compact)
+% ---------- TOC Styling ----------
 \setlength{\cftbeforesecskip}{0pt}
 \setlength{\cftbeforesubsecskip}{0pt}
 \setlength{\cftsecindent}{0pt}
@@ -197,30 +148,21 @@
 \setlength{\cftsecnumwidth}{2.1em}
 \setlength{\cftsubsecnumwidth}{2.7em}
 
-% Editable TOC font size 
 \newcommand{\TOCFontSizePt}{9}  
-
-% Auto-leading for TOC font: 1.2x size 
 \newcommand{\TOCFontCmd}{%
   \fontsize{\TOCFontSizePt}{\dimexpr \TOCFontSizePt pt * 12 / 10\relax}\selectfont
 }
-
-% Editable TOC line spacing (TOC only)
 \newcommand{\TOCLineStretch}{1.36} 
 
-% Apply TOC fonts (entries + page numbers)
 \renewcommand{\cftsecfont}{\TOCFontCmd}
 \renewcommand{\cftsubsecfont}{\TOCFontCmd}
 \renewcommand{\cftsecpagefont}{\TOCFontCmd}
 \renewcommand{\cftsubsecpagefont}{\TOCFontCmd}
 
-
+% ---------- Custom Commands ----------
 \newcommand{\ReplaceText}{[Replace with your content.]}
+\newcommand{\Filler}{} 
 
-% ~80-word filler 
-\newcommand{\Filler}{%
-
-}
 
 \begin{document}
 
@@ -254,9 +196,7 @@
 % Abbreviations and Symbols (front matter; included in TOC)
 % ----------------------------
 \section*{Abbreviations and Symbols}
-
-{\setstretch{1.23}        % EDIT HERE to reduce line spacing
-
+{\setstretch{1.16}        % EDIT HERE to reduce line spacing
 \begin{minipage}{0.48\textwidth}
 \centering
 \begin{tabular}{ll}
@@ -295,19 +235,19 @@ in & Inches \\
 k & Inducted Drag Factor \\
 kg & Kilogram \\
 km & Kilometer \\
-L & No of Laps \\
+L & No. of Laps \\
 LA & Lever Arm \\
 Lf & Lift \\
 Lf/D & Lift to Drag ratio \\
 LiPo & Lithium Polymer \\
 m & Meter \\
-M1 & Mission 1 \\
 \end{tabular}
 \end{minipage}
 \hfill
 \begin{minipage}{0.48\textwidth}
 \centering
 \begin{tabular}{ll}
+M1 & Mission 1 \\
 M2 & Mission 2 \\
 M3 & Mission 3 \\
 mm & Millimeter \\
@@ -316,14 +256,14 @@ n & Load Factor \\
 N & Newton \\
 NiCAD & Nickel Cadmium \\
 NiMH & Nickel Metal Hydride \\
-P & No of Passengers \\
+P & No. of Passengers \\
 Pa & Pascal \\
 q & Dynamic Pressure \\
 RAC & Rated Aircraft Cost \\
-rpm & Rotations Per Minute \\
+RPM & Rotations Per Minute \\
 $R_{turn}$ & Turn Radius \\
 Rx & Receiver \\
-$S_{takeoff}$ & takeoff distance \\
+$S_{takeoff}$ & Takeoff Distance \\
 SBEC & Switch Mode Battery Eliminator Circuit \\
 SH & Area of Horizontal Stabilizer \\
 SV & Area of Vertical Stabilizer \\
@@ -360,20 +300,26 @@ $\rho$ & Air Density \\
 % 1. Executive Summary
 % ----------------------------
 \section{Executive Summary}
-The following technical report outlines the conceptualized design, followed by the detailed design, manufacturing, and testing of <PLANE-NAME>. We are representing Birla Institute of Technology and Sciences, Pilani - K. K. Birla Goa Campus, in the Design, Build, and Fly competition hosted by the American Institute of Aeronautics and Astronautics.  The remotely piloted aircraft was designed to execute one ground mission and three flight missions. Mission 1 consists of performing a test flight around the designed flight path. Mission 2 is the charter flight that aims to carry rubber ducks as passengers and hockey pucks as cargo. Mission 3 consists of flying laps around the desired flight path with the banner as a payload. During this mission, the banner must be unfurled mid-flight and released on the last lap.  <Plane-Name> was designed with a mid-wing configuration and a conventional tail design. The mid-wing design provides easy access to the payload bay, and the conventional tail improves the plane’s serviceability. The aircraft’s tail was sized in accordance with the flight characteristics required for the completion of each mission while maximizing the overall score. The aircraft features a twin-puller configuration, powered by two Scorpion A-5025-415kV, which can produce a combined Maximum Take-Off Weight (MTOW) of 12 Kg while maintaining a constant cruise velocity of 21 m/s throughout the flight duration. The wingspan is 1.5m, giving the plane a total RAC of 0.996. The aircraft aims to carry 10 rubber ducks with 3 hockey pucks as payload with a wing area of 0.645 m\textsuperscript{2} and a fuselage of dimensions 995mm, 180mm, and 180mm. This configuration of passengers and cargo in Mission 2 gives us an estimated income of 398.00 and a cost of 144.06, which makes the net income 253.94. The banner is chosen to be 508mm in length and 101.6mm in height. The aircraft was designed in three phases: conceptual, preliminary, and detailed design. Conceptual design consists of analyzing the rulebook and formulating an initial design for the plane to be built on. The preliminary design provided a stronger foundation for the team to build on. This was then followed by a detailed design where we finalized intricate details and the internal structure of the plane. The design phase was followed by the manufacturing and testing process. The manufacturing process includes the production of <Plane Name> in its entirety. The testing process involved subjecting the plane to load-bearing tests and electronics testing, as well as performing test flights similar to the competition.
+The following technical report outlines the conceptualized design, followed by the detailed design, manufacturing, and testing of the aircraft. We are representing Birla Institute of Technology and Sciences, Pilani - K. K. Birla Goa Campus, in the Design, Build, and Fly competition hosted by the American Institute of Aeronautics and Astronautics. The remotely piloted aircraft was designed to execute one ground mission and three flight missions. Mission 1 consists of performing a test flight around the designed flight path. Mission 2 is the charter flight that aims to carry rubber ducks as passengers and hockey pucks as cargo. Mission 3 consists of flying laps around the desired flight path with the banner as a payload. During this mission, the banner must be unfurled mid-flight and released on the last lap.
+
+The aircraft was designed with a mid-wing configuration and a conventional tail design. The mid-wing design provides easy access to the payload bay, and the conventional tail improves the plane’s serviceability. The aircraft’s tail was sized in accordance with the flight characteristics required for the completion of each mission while maximizing the overall score. The aircraft features a twin-puller configuration, powered by two Scorpion A-5025-415kV motors, which can produce a combined thrust of 98.55 N while maintaining a constant cruise velocity of 21 m/s throughout the flight duration.
+
+The wingspan is 1.5 m, giving the plane a total RAC of 0.996. The aircraft aims to carry 10 rubber ducks with 3 hockey pucks as payload, with a wing area of 0.645 m\textsuperscript{2} and a fuselage of dimensions 995 mm, 180 mm, and 180 mm. This configuration of passengers and cargo in Mission 2 gives us an estimated income of 398.00 and a cost of 144.06, which makes the net income 253.94. The banner is chosen to be 508 mm in length and 101.6 mm in height.
+
+The aircraft was designed in three phases: conceptual, preliminary, and detailed design. Conceptual design consists of analyzing the rulebook and formulating an initial design for the plane to be built on. The preliminary design provided a stronger foundation for the team to build on. This was followed by a detailed design in which we finalized the intricate details and internal structure of the plane. The design phase was followed by the manufacturing and testing process. The manufacturing process includes the production of the aircraft in its entirety. The testing process involved subjecting the plane to load-bearing tests and electronics testing, as well as performing test flights similar to the competition.
 
 \begin{center}
-    \includegraphics[width=0.67\linewidth]{Prototype-2r.jpg}
-    \captionof{figure}{Overview of the <Plane Name> Design}
+    \includegraphics[width=0.67\linewidth]{Prototype-2r-2.jpg}
+    \captionof{figure}{Overview of the Hell-Buoy Design}
 \end{center}
 % ----------------------------
 % 2. Management Summary
 % ----------------------------
 \section{Management Summary}
- Team Pegasus 2025-26 consists of a total of 19 students, including six juniors and thirteen sophomores, who have contributed to the design and manufacturing of <Plane Name> as an extracurricular activity. The team is entirely student-run but receives guidance from alumni and a faculty-in-charge.
+ Team Pegasus 2025-26 consists of a total of 19 students, including six juniors and thirteen sophomores, who have contributed to the design and manufacturing of the aircraft as an extracurricular activity, which adheres to the competition rules of 1/3 class rule. The team is entirely student-run but receives guidance from alumni and a faculty-in-charge.
 
 \subsection{Team Organization }
-The 19 students on the team are divided into three subsystems, namely Aerodynamics, Optimization \& Avionics, and Structural. The team is structured as shown in \hyperref[fig:Team_org]{Figure~\ref*{fig:Team_org}}. The team’s captain leads the design, building, testing, and overall management of the team, while the subsystem leads look into the specific needs of each subsystem. The team leaders approached the faculty advisor for critical insights for our plane design. Each subsystem maintains short-term goals and progress reports, while the captain tracks the major milestones. The mission optimization subsystem is tasked with conducting preliminary analyses to determine the primary direction of the plane design. This includes sensitivity analysis, constraint analysis, and a weighted figure-of-merit analysis. The aerodynamic subsystem designs the aircraft model based on the constraints derived from mission optimization. This includes selecting the airfoil and performing stability analyses. The team uses the flow analysis software Flow5 and XFLR5 for these simulations. The avionics subsystem selects motors, ESCs, and servo motors and is tasked with designing, building, and testing the entire electrical circuit. The structural subsystem team is responsible for CAD modeling and the manufacturing of the entire aircraft. The design of the banner deployment and drop mechanisms are also developed by this subsystem. With help from the avionics and the aerodynamics subsystems, the structural subsystem tests the plane while simulating mission conditions. The test pilot is responsible for conducting all test flights of the aircraft.
+The 19 students on the team are divided into three subsystems, namely Aerodynamics, Optimization \& Avionics, and Structural. The team is structured as shown in \hyperref[fig:Team_org]{Figure~\ref*{fig:Team_org}}. The team’s captain leads the design, building, testing, and overall management of the team, while the subsystem leads look into the specific needs of each subsystem. The team leaders approached the faculty advisor for critical insights for our plane design. Each subsystem maintains short-term goals and progress reports, while the captain tracks the major milestones. The mission optimization subsystem is tasked with conducting preliminary analyses to determine the primary direction of the plane design. This includes sensitivity analysis, constraint analysis, and a weighted figure-of-merit analysis. The aerodynamic subsystem designs the aircraft model based on the constraints derived from mission optimization. This includes selecting the airfoil and performing stability analyses. The team uses the flow analysis software FLOW5 and XFLR5 for these simulations. The avionics subsystem selects motors, ESCs, and servo motors and is tasked with designing, building, and testing the entire electrical circuit. The structural subsystem team is responsible for CAD modeling and the manufacturing of the entire aircraft. The design of the banner deployment and drop mechanisms is also developed by this subsystem. With help from the avionics and the aerodynamics subsystems, the structural subsystem tests the plane while simulating mission conditions. The test pilot is responsible for conducting all test flights of the aircraft.
 
 \begin{center}
     \includegraphics[width=0.6\linewidth]{team_org_1.png} \captionof{figure}{Team Structure}
@@ -382,7 +328,7 @@ The 19 students on the team are divided into three subsystems, namely Aerodynami
 \subsection{Major Milestones}
 Key milestones and deliverable dates were planned over an eight-month window, as illustrated in \hyperref[fig:gantt]{Figure~\ref*{fig:gantt}}. The schedule was structured to accommodate multiple aircraft iterations, allocating sufficient time for design, manufacturing, testing, and data analysis for each prototype prior to the final competition aircraft. This approach ensured that lessons learned from each iteration could be incorporated into subsequent refinements.
 
-The timeline allowed for parallel workflows, enabling overlapping tasks to maximize efficient use of team resources. Dedicated periods were assigned for testing and performance evaluation between iterations to support data-driven design improvements. Progress against the schedule was monitored through weekly reviews to ensure milestones were met and adjustments were made where necessary.
+The timeline allowed for parallel workflows, enabling tasks to overlap, maximizing the efficient use of team resources. Dedicated periods were assigned for testing and performance evaluation between iterations to support data-driven design improvements. Progress against the schedule was monitored through weekly reviews to ensure milestones were met and adjustments were made where necessary.
 
 \begin{figure}[htbp]
     \centering
@@ -398,7 +344,7 @@ The primary objective of this year’s mission is to design, build, and test a f
 
 The competition consists of three flight missions and one ground mission: a proof of flight (M1), a charter flight (M2), a banner towing flight (M3), and a configuration demonstration (GM).
 
-The overall Competition Score is a function of the Design Report Score, the Total Mission Score, and the Participation Score, as shown in \hyperref[eq:competition_score]{Equation~\ref*{eq:competition_score}}. A Participation Score of 1 is given for attending, 2 for passing the Technical inspection, and 3 for attempting a mission. The total mission score is defined in \hyperref[eq:total_mission_score]{Equation~\ref*{eq:total_mission_score}} as the sum of the scores of the three flight missions and the ground mission. The total report score, defined by \hyperref[eq:total_report_score]{Equation~\ref*{eq:total_report_score}}, is the sum of the proposal score and the detailed design report score, weighted at 15\% and 85\%, respectively. Both reports are evaluated on a 100-point rubric.
+The overall Competition Score is a function of the Design Report Score, the Total Mission Score, and the Participation Score, as shown in \hyperref[eq:competition_score]{Equation~\ref*{eq:competition_score}}. A Participation Score of 1 is given for attending, 2 for passing the Technical Inspection, and 3 for attempting a mission. The total mission score is defined in \hyperref[eq:total_mission_score]{Equation~\ref*{eq:total_mission_score}} as the sum of the scores of the three flight missions and the ground mission. The total report score, defined by \hyperref[eq:total_report_score]{Equation~\ref*{eq:total_report_score}}, is the sum of the proposal score and the detailed design report score, weighted at 15\% and 85\%, respectively. Both reports are evaluated on a 100-point rubric.
 
 \begin{equation}
 \textit{Competition Score} = (\textit{Design Report Score} \times \textit{Total Mission Score}) + \textit{Participation Score}
@@ -494,58 +440,39 @@ The score given for this mission is the quotient of the minimum mission time out
 GM = \frac{(Time)_{\text{Min}}}{(Time)_{\text{N}}}
 \end{equation}
 
-\begin{table}[H]
-\centering
-\renewcommand{\arraystretch}{0.9}
-\begin{tabularx}{\textwidth}{|>{\columncolor{db}}c|>{\arraybackslash}X|}
-\hline
-\rowcolor{y}\textbf{Mission} & \textbf{Requirements} \\ \hline
+\begin{table}[H] 
+\centering 
+\renewcommand{\arraystretch}{0.9} 
+\begin{tabularx}{\textwidth}{|>{\columncolor{db}}c|>{\arraybackslash}X|} 
+\hline 
+\rowcolor{y}\textbf{Mission} & \textbf{Requirements} \\ \Xhline{1.5pt} % Thick divider under header
 
+& Aircraft structure must be strong enough to withstand maximum flight-induced stresses. \\ \cline{2-2} 
+& Aircraft empty weight should be minimized. \\ \cline{2-2} 
+& Aircraft must be capable of exhibiting stable level flight in all mission configurations. \\ \cline{2-2} 
+& Aircraft should maximize L/D to improve overall mission efficiency. \\ \cline{2-2} 
+& Aircraft must have sufficient T/W and W/S to take off within the runway length of approximately 300 ft. \\ \cline{2-2} 
+\multirow{-7}{*}{\textcolor{gray!5}{M1, M2, M3}} & Discharge rate of the battery should be minimized. \\ \Xhline{1.5pt} % Thick category divider
 
-& Aircraft structure must be strong enough to withstand maximum flight-induced stresses. \\ \cline{2-2}
+& The number of Rubber Ducks and Hockey Pucks should be maximized. \\ \cline{2-2} 
+& Battery capacity should be optimized to minimize the Efficiency Factor while sustaining the 5-minute flight. \\ \cline{2-2} 
+\multirow{-3}{*}{\textcolor{gray!5}{M2}} & Propulsion should enable the aircraft to achieve a high velocity to maximize the number of laps. \\ \Xhline{1.5pt} % Thick category divider
 
-& Aircraft empty weight should be minimized. \\ \cline{2-2}
+& Banner length should be maximized. \\ \cline{2-2} 
+& Banner material chosen must produce minimum drag. \\ \cline{2-2} 
+& Banner holding mount should not fail under the aerodynamic forces acting on the banner. \\ \cline{2-2} 
+\multirow{-4}{*}{\textcolor{gray!5}{M3}} & Propulsion should enable the aircraft to achieve a high velocity to maximize the number of laps. \\ \Xhline{1.5pt} % Thick category divider
 
-& Aircraft must be capable of exhibiting stable level flight in all mission configurations. \\ \cline{2-2}
-
-& Aircraft should maximize L/D to improve overall mission efficiency. \\ \cline{2-2}
-
-& Aircraft must have sufficient T/W and W/S to take off within the runway length of approximately 300 ft. \\ \cline{2-2}
-\multirow{-7}{*}{\textcolor{gray!5}{M1, M2, M3}}
-& Discharge rate of the battery should be minimized. \\ \hline
-
-
-& The number of Rubber Ducks and Hockey Pucks should be maximized. \\ \cline{2-2}
-
-& Battery capacity should be optimized to minimize the Efficiency Factor while sustaining the 5-minute flight. \\ \cline{2-2}
-\multirow{-3}{*}{\textcolor{gray!5}{M2}}
-& Propulsion should enable the aircraft to achieve a high velocity to maximize the number of laps. \\ \hline
-
-
-& Banner length should be maximized. \\ \cline{2-2}
-
-& Banner material chosen must produce minimum drag. \\ \cline{2-2}
-
-& Banner holding mount should not fail under the aerodynamic forces acting on the banner. \\ \cline{2-2}
-\multirow{-4}{*}{\textcolor{gray!5}{M3}}
-& Propulsion should enable the aircraft to achieve a high velocity to maximize the number of laps. \\ \hline
-
-
-& Easy access to the passengers and cargo. \\ \cline{2-2}
-
-& Restraints should allow quick loading and unloading of rubber ducks and hockey pucks. \\ \cline{2-2}
-
-& Banner mechanism should allow quick installation of the banner. \\ \cline{2-2}
-
-& Banner mechanism should reliably deploy and release the banner. \\ \cline{2-2}
-\multirow{-5}{*}{\textcolor{gray!5}{GM}}
-& Flight controls should remain active. \\ \hline
-
-\end{tabularx}
-\caption{Mission-wise Design Requirements}
-\label{tab:Mission-wise Design Requirements}
+& Easy access to the passengers and cargo. \\ \cline{2-2} 
+& Restraints should allow quick loading and unloading of rubber ducks and hockey pucks. \\ \cline{2-2} 
+& Banner mechanism should allow quick installation of the banner. \\ \cline{2-2} 
+& Banner mechanism should reliably deploy and release the banner. \\ \cline{2-2} 
+\multirow{-5}{*}{\textcolor{gray!5}{GM}} & Flight controls should remain active. \\ \hline 
+\end{tabularx} 
+\caption{Mission-wise Design Requirements} 
+\label{tab:Mission-wise Design Requirements} 
 \end{table}
-\clearpage
+
 \subsection{Translation of Design Requirements into Subsystem Design Goals}
 
 \begin{table}[H]
@@ -554,29 +481,37 @@ GM = \frac{(Time)_{\text{Min}}}{(Time)_{\text{N}}}
 \renewcommand{\arraystretch}{0.9} % Reduced from 1.5 to save vertical space
 \setlength{\tabcolsep}{4pt} % Tightens horizontal padding
 
-\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash\bfseries\columncolor{db}}m{2.5cm}|>{\centering\arraybackslash}X|}
+\begin{tabularx}{\textwidth}
+{|>{\centering\arraybackslash\bfseries\columncolor{db}}m{2.5cm}|
+ >{\arraybackslash}X|}
 \hline
-\rowcolor{y}Category & \textbf{Constraints / Requirements} \\ \hline
+\rowcolor{y}Category & \textbf{Constraints / Requirements} \\ \Xhline{1.5pt} % Thick divider under header
+
 & Aircraft wingspan must be more than 3 feet and less than 5 feet \\ \arrayrulecolor{db}\cline{2-2}
 & The aircraft must not be rotary wing or lighter-than-air \\ \arrayrulecolor{db}\cline{2-2}\multirow{-3}{*}{\textcolor{gray!5}{Configuration}}
-& The aircraft MTOW must not exceed 24.95 kg \\ \arrayrulecolor{black}\hline
+& The aircraft MTOW must not exceed 10.42 kg \\ \arrayrulecolor{black}\Xhline{1.5pt} % Thick category divider
+
 & Aircraft must pass a wingtip load test with the maximum designed takeoff weight \\ \arrayrulecolor{db}\cline{2-2}\multirow{-2}{*}{\textcolor{gray!5}{Structure}}
-& All permanent components must be secured using locking devices \\ \arrayrulecolor{black}\hline
+& All permanent components must be secured using locking devices \\ \arrayrulecolor{black}\Xhline{1.5pt} % Thick category divider
+
 & Aircraft must be propeller driven and electric powered \\ \arrayrulecolor{db}\cline{2-2}
 & The maximum current rating for the arming fuse is 100 A \\ \arrayrulecolor{db}\cline{2-2}
 & Propulsion batteries must be identical COTS NiCAD, NiMH, or lithium-based \\ \arrayrulecolor{db}\cline{2-2}
 & Total propulsion energy shall not exceed 100 Wh \\ \arrayrulecolor{db}\cline{2-2}
 & Aircraft must have a separate avionics battery for receiver and servos \\ \arrayrulecolor{db}\cline{2-2}
 & The aircraft must have an externally accessible Rx system power switch \\ \arrayrulecolor{db}\cline{2-2}\multirow{-7}{*}{\textcolor{gray!5}{Propulsion}}
-& The BEC of the ESC must be disabled \\ \arrayrulecolor{black}\hline
+& The BEC of the ESC must be disabled \\ \arrayrulecolor{black}\Xhline{1.5pt} % Thick category divider
+
 & Aircraft assembly and payload installation must be completed in under 5 min \\ \arrayrulecolor{db}\cline{2-2}
 & All flight missions must be completed within 5 minutes \\ \arrayrulecolor{db}\cline{2-2}\multirow{-3}{*}{\textcolor{gray!5}{General}}
-& Landing should not cause significant damage \\ \arrayrulecolor{black}\hline
+& Landing should not cause significant damage \\ \arrayrulecolor{black}\Xhline{1.5pt} % Thick category divider
+
 & Passengers must be carried in a single, level compartment \\ \arrayrulecolor{db}\cline{2-2}
 & Doors must not allow access between cargo, passenger, or internal bays \\ \arrayrulecolor{db}\cline{2-2}
-& Carry min. 3 passengers per declared cargo item during Tech Inspection \\ \arrayrulecolor{db}\cline{2-2}
+& Carry minimum 3 passengers per declared cargo item during Tech Inspection \\ \arrayrulecolor{db}\cline{2-2}
 & Aircraft must be capable of carrying at least one piece of cargo \\ \arrayrulecolor{db}\cline{2-2}\multirow{-5}{*}{\textcolor{gray!5}{Payload}}
-& All payloads must be restrained during all phases of flight \\ \arrayrulecolor{black}\hline
+& All payloads must be restrained during all phases of flight \\ \arrayrulecolor{black}\Xhline{1.5pt} % Thick category divider
+
 & The banner must be $\ge$ 10 inches long with a maximum aspect ratio of 5 \\ \arrayrulecolor{db}\cline{2-2}
 & Stowage, deployment, and release mechanisms may be internal or external \\ \arrayrulecolor{db}\cline{2-2}\multirow{-3}{*}{\textcolor{gray!5}{Banner}}
 & The banner must be compactly stowed externally during take-off \\ \arrayrulecolor{black}\hline
@@ -667,8 +602,11 @@ for the variable parameters.
 
 
 \subsection{Configuration Selection}
+\label{sec:config_select}
 An optimal aircraft configuration and its components were determined through an extensive weighted analysis using Figure of Merit (FOM) charts, where each element was assigned performance metrics weighted by relative importance and analytical hierarchy. The configuration options were scored between -1 and 1 based on the commonly accepted flight characteristics and the team’s experience. This allowed the team to look beyond performance metrics and account for the other complexities, such as the elevated manufacturing risk associated with intricate geometries and structures. The team prioritized mechanical simplicity and stable flight handling, ensuring these practical gains did not come at the expense of overall mission performance.
 \subsubsection{Overall Configuration}
+
+
 \begin{table}[H]
 \centering
 \begin{tabular}{|
@@ -775,7 +713,7 @@ The team analyzed three wing positions: high wing, mid wing, and low wing, as di
 \caption{Wing Shape}
 \label{tab:Wing_shape}
 \end{table}
-While considering wing shapes, three configurations were evaluated by the team, as mentioned in \hyperref[tab:Wing_shape]{Table~\ref*{tab:Wing_shape}}: rectangular, tapered, and elliptical. In this comparison, manufacturing and stability were of prime significance while selecting the configuration and geometry. The elliptical geometry was immediately rejected due to its extreme manufacturing difficulty. Although an elliptical shape offers high lift, it offers poor performance in terms of strength, when compared to other planforms. The tapered configuration was also phased out due to the lower lift produced. Eventually, a rectangular wing was selected for ease of manufacturing, optimal lift, and satisfactory stability.
+While considering wing shapes, three configurations were evaluated by the team, as mentioned in \hyperref[tab:Wing_shape]{Table~\ref*{tab:Wing_shape}}: rectangular, tapered, and elliptical. In this comparison, manufacturing and stability were of prime significance while selecting the configuration and geometry. The elliptical geometry was immediately rejected due to its extreme manufacturing difficulty. Although an elliptical shape offers high lift, it offers poor performance in terms of strength when compared to other planforms. The tapered configuration was also phased out due to the lower lift produced. Eventually, a rectangular wing was selected for ease of manufacturing, optimal lift, and satisfactory stability.
 \subsubsection{Propulsion Configuration}
 \begin{table}[H]
 \centering
@@ -789,7 +727,7 @@ While considering wing shapes, three configurations were evaluated by the team, 
 }
 \hline
 
-\cellcolor{white}& & \includegraphics[width=2cm, valign=c]{single puller.png} & \includegraphics[width=2cm, valign=c]{twin puller.png} \\
+\cellcolor{white}& & \includegraphics[width=1.5cm, valign=c]{single puller.png} & \includegraphics[width=1.5cm, valign=c]{twin puller.png} \\
 \hline
 \rowcolor{y}Parameter & Weight & Single puller & Twin puller\\
 \hline
@@ -807,8 +745,7 @@ While considering wing shapes, three configurations were evaluated by the team, 
 \captionof{table}{Propulsion System}
 \label{tab:propulsion}
 \end{table}
-Single and twin puller variants were compared on the basis of flight characteristics, power requirements, and the configuration's weight distribution effect, as displayed in \hyperref[tab:propulsion]{Table~\ref*{tab:propulsion}}. A twin-puller propulsion system was implemented to achieve balanced weight distribution and improved flight performance, offering higher thrust during takeoff and additional yaw control.
-\Filler
+Single and twin puller variants were compared on the basis of flight characteristics, power requirements, and the configuration's weight distribution effect, as displayed in \hyperref[tab:propulsion]{Table~\ref*{tab:propulsion}}. A twin-puller propulsion system was implemented to achieve balanced weight distribution and improved flight performance, offering higher thrust during takeoff and additional yaw control. 
 \subsubsection{Landing Gear Configuration}
 
 \begin{table}[H]
@@ -858,6 +795,8 @@ Selecting an optimal landing gear configuration is critical in ensuring a stable
 >{\centering\arraybackslash}m{3cm}|
 }
 \hline
+\cellcolor{white}& & \includegraphics[width=2cm, valign=c]{Conventional.jpg} & \includegraphics[width=2cm, valign=c]{H tail.jpg} & \includegraphics[width=2cm, valign=c]{U tail.jpg}\\
+\hline
 \rowcolor{y}Parameter& Weight & Conventional tail & H tail & Inverted U tail \\
 \hline
 \textcolor{gray!5}{\text{Stability}} & 0.25 & \cellcolor{lb}0 & 1  & 1\\
@@ -895,6 +834,8 @@ As summarized in \hyperref[tab:tail_config_weight]{Table~\ref*{tab:tail_config_w
 !{\vrule width 2pt}
 }
 \hline
+\cellcolor{white}& & \includegraphics[width=2cm, valign=c]{Tail.png} & \includegraphics[width=2cm, valign=c]{Elevator.png} & \includegraphics[width=2cm, valign=c]{Fuselage.png}\\
+\hline
 \rowcolor{y}Parameter & Weight & Vertical Tip & Under Elevator & Ventral Fuselage \\
 \hline
 \textcolor{gray!5}{\text{Stability}} & 0.35 & -1 & -1 & \cellcolor{lb}1\\
@@ -922,7 +863,7 @@ The above weighted analysis weighed the advantages and disadvantages of differen
 The preliminary design provided the team with a solid foundation for both the final manufacturing and the detailed design of the plane. This section builds on all previous sections and focuses on meeting both the general and design-specific requirements. The preliminary design builds on the estimations made during the conceptual phase.
 
 \subsection{Design Methodology}
-A sensitivity analysis was conducted based on the MTOW, wing loading, thrust loading, and wing area obtained from the constraint analysis. A CAD model was created for all components and the aircraft assembly to meet all structural, scoring, and safety requirements, including all connections and wiring, which were then manufactured via laser cutting and 3D printing. After the aircraft was built, ground and flight tests were conducted to validate the plane's capabilities. This iterative methodology was used to optimize the aircraft's performance and is summarized in \hyperref[fig:design_method]{Figure~\ref*{fig:design_method}} below. A sensitivity analysis was performed that considered all mission requirements and constraints. This was followed by a computational analysis of the aerodynamic characteristics of different airfoils using FLOW5. The design and placement of the structural components were then determined to achieve an optimal load distribution. To ensure structural feasibility and integrity, the plane was manufactured iteratively. The goal was to achieve the targeted score for each mission without compromising on stability or structural integrity. 
+The design followed an iterative methodology centered on performance optimization, as summarized in \hyperref[fig:design_method]{Figure~\ref{fig:design_method}}. This process began with a sensitivity analysis based on the MTOW, wing loading, thrust loading, and wing area obtained from the constraint analyses. To evaluate aerodynamic performance, a computational flow analysis was performed on various airfoils using XFLR5. The fuselage design was analysed along with the wings using FLOW5 to determine their lift and drag characteristics. Detailed CAD models of all components and the final aircraft assembly were then developed using SolidWorks and Fusion 360. To ensure structural feasibility and integrity, Finite Element Analysis (FEA) was conducted using Ansys to validate load distribution and structural safety. Once the design met all scoring and safety requirements, components were manufactured via laser cutting and 3D printing. Finally, ground and flight tests were conducted to validate the aircraft's capabilities, ensuring the targeted mission scores were achieved without compromising stability. 
 
 \begin{figure}[h]
 \centering
@@ -931,14 +872,11 @@ A sensitivity analysis was conducted based on the MTOW, wing loading, thrust loa
 \label{fig:design_method}
 \end{figure}
 
-
-% (Possible inclusion: - Mission Model)
-
 \subsection{Design Trade Studies}
 This section provides insights into the preliminary configuration selections that shaped the plane in its initial phases. The trade studies include a mission constraint analysis, airfoil selection, followed by control surface, tail, wing, fuselage, and banner sizing.
 \Filler
 \subsubsection{Constraint Analysis}
-A constraint analysis was carried out to determine the feasible range for the thrust and wing loading values. The process was performed iteratively throughout the preliminary design process, with changes made to the variables as needed based on the design changes. The following values were assumed for the variables, which were derived from historical data, previous competition experience, and Raymer’s handbook, and represent the values taken in the final iteration (\hyperref[tab:variable_values_for_constraint_equations]{Table~\ref*{tab:variable_values_for_constraint_equations}}).
+A constraint analysis was carried out to determine the feasible range of the thrust and wing loading values. The process was performed iteratively throughout the preliminary design process, with changes made to the variables as needed based on the design changes. The following values were assumed for the variables, which were derived from historical data, previous competition experience, and Raymer’s handbook, and represent the values taken in the final iteration (\hyperref[tab:variable_values_for_constraint_equations]{Table~\ref*{tab:variable_values_for_constraint_equations}}).
 
 \begin{table}[h!]
 \centering
@@ -956,21 +894,21 @@ c|}
 \text{Variable} & \text{Value} &
 \text{Variable} & \text{Value} \\ \hline
 
-\textcolor{gray!5}$C_D$ & 0.14 &
-\textcolor{gray!5}$v_{\text{cruise}}$ & 25 m/s &
-\textcolor{gray!5}$\rho$ & 1.225 kg/m$^3$ \\ \hline
+\textcolor{gray!5}{$C_D$} & 0.14 &
+\textcolor{gray!5}{$v_{\text{cruise}}$} & 25 m/s &
+\textcolor{gray!5}{$\rho$} & 1.225 kg/m$^3$ \\ \hline
 
-\textcolor{gray!5}$C_{L_{\max}}$ & 0.9 &
-\textcolor{gray!5}$v_{\text{stall}}$ & 10 m/s &
-\textcolor{gray!5}$k$ & 0.115 \\ \hline
+\textcolor{gray!5}{$C_{L_{\max}}$} & 0.9 &
+\textcolor{gray!5}{$v_{\text{stall}}$} & 10 m/s &
+\textcolor{gray!5}{$k$} & 0.115 \\ \hline
 
-\textcolor{gray!5}$q$ & 382 Pa &
-\textcolor{gray!5}$R_{\text{turn}}$ & 22 m &
-\textcolor{gray!5}$\theta_{\text{climb}}$ & 30$^\circ$ \\ \hline
+\textcolor{gray!5}{$q$} & 382 Pa &
+\textcolor{gray!5}{$R_{\text{turn}}$} & 22 m &
+\textcolor{gray!5}{$\theta_{\text{climb}}$} & 30$^\circ$ \\ \hline
 
-\textcolor{gray!5}$n$ & 2 &
-\textcolor{gray!5}$S_{\text{takeoff}}$ & 91 m &
-\textcolor{gray!5}$\theta_{\text{turn}}$ & 60$^\circ$ \\ \hline
+\textcolor{gray!5}{$n$} & 2 &
+\textcolor{gray!5}{$S_{\text{takeoff}}$} & 91 m &
+\textcolor{gray!5}{$\theta_{\text{turn}}$} & 60$^\circ$ \\ \hline
 
 \end{tabular}
 \caption{Variable Values for Constraint Equations}
@@ -1051,7 +989,7 @@ The resulting graph derived from these equations that expresses the range of fea
 -\subsubsection{Airfoil Selection}
 The team shortlisted five different airfoils based on their Coefficient of Lift ($C_L$) and analyzed them over a range of Reynolds numbers from 50,000 to 6,000,000. The team considered DAE-31 Airfoil, Eppler E423, MH 112, MH 114, and NACA 4412 due to their favorable efficiency in flight. According to the analysis results, NACA 4412 and E423 have the highest lift coefficients. However, a major drawback with the NACA 4412 is that the NACA airfoils considered are too concave due to their high camber, so the manufacturing and structural reinforcements of the wing would prove a major concern. For E423, the drag coefficient ($C_D$) rises steeply with an increase in lift coefficient ($C_L$), which hinders the efficiency of the aircraft. Therefore, the DAE-31 airfoil was chosen. 
 \begin{center}
-\includegraphics[width=0.5\linewidth]{airfoillist.png} 
+\includegraphics[width=0.3\linewidth]{airfoillist.png} 
 \captionof{figure}{List of airfoils Analyzed}
 \begin{figure}[h]
     \centering
@@ -1071,9 +1009,21 @@ The team shortlisted five different airfoils based on their Coefficient of Lift 
 \end{figure}
 
 \end{center}
-\clearpage
+
 \subsubsection{Control Surface Sizing}
+
+\begin{wrapfigure}{r}{0.3\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{controlsurface_up.jpeg}
+    \includegraphics[width=\linewidth]{controlsurface_down.jpeg}
+    \caption{Control surface deflection (up and down)}
+    \label{fig:control_surface}
+\end{wrapfigure}
+
 For the control surfaces, 30\% of the chord length of the wing, horizontal stabilizer, and vertical stabilizer was reserved for the aileron, elevator, and rudder, respectively. This sizing decision was made based on the torque available from the servos. The selected dimensions were tested and demonstrated promising pitch control, roll rate, and yaw authority. The objective was to ensure that the control surfaces provided sufficient control authority while remaining within the servos’ capability to generate the torque required to hold the surfaces in position during flight.
+
+To determine the range of motion of each servo, testing was conducted with the control surface attached. The angular displacement was measured at both extreme positions of the servo. As shown in Figure~\ref{fig:control_surface}, the range of motion was found to be from $-15^\circ$ to $+30^\circ$.
+
 
 \subsubsection{Tail Sizing}
 Tail volume is a crucial metric that measures the aerodynamic leverage the tail exerts on the main wing to maintain stability, which is determined using \hyperref[eq:HVC]{Equation~\ref*{eq:HVC}} and \hyperref[eq:VVC]{Equation~\ref*{eq:VVC}}. The following equations are used to calculate the horizontal and vertical tail volume coefficients required to ensure stable flight performance. The lever arm was chosen to be \textbf{78\,cm} to accommodate the selected number of rubber ducks and hockey pucks while providing sufficient clearance for the banner when fully deployed. 
@@ -1090,7 +1040,7 @@ VVC = \frac{LA \times S_v}{b \times S_w}
     %VVC &= \frac{LA \times S_v}{b \times S_w}
 %\end{align*}
 
-From these calculations, the horizontal volume coefficient (HVC) was found to be \textbf{0.664\,m$^3$}, and the vertical volume coefficient (VVC) was determined as \textbf{0.071\,m$^3$}.
+From these calculations, the horizontal volume coefficient (HVC) was found to be \textbf{0.664}, and the vertical volume coefficient (VVC) was determined as \textbf{0.071}.
 
 \subsubsection{Fuselage Sizing}
 
@@ -1103,7 +1053,7 @@ From these calculations, the horizontal volume coefficient (HVC) was found to be
     \vspace{-10pt}
 \end{wrapfigure}
 
-The fuselage sizing process was primarily driven by the size and structural requirements of the internal payloads. The cargo and passenger placement and size are decided based on mass distribution, as discussed in the static stability analysis in section ~\ref{sec:final_concept_design}. The heaviest payload- the cargo- was thus placed near the front to counterbalance the propulsion batteries and passengers, maintaining optimal CoG location. The cross-sectional area of 180 mm x 180 mm was decided to accommodate the width of the passenger compartment and the banner compartment under the mid-wing. The 995 mm length is established to accommodate all the compartments comfortably; all the compartment placements are shown in \hyperref[fig:fuselage_top]{Figure~\ref*{fig:fuselage_top}}. The nose and the end of the fuselage are tapered to reduce drag without compromising strength.
+The fuselage sizing process was primarily driven by the size and structural requirements of the internal payloads. The cargo and passenger placement and size were decided based on weighted configuration analysis, as discussed in section ~\ref{sec:config_select}. The heaviest payload, the cargo, was thus placed near the front to counterbalance the propulsion batteries and passengers, maintaining optimal CoG location. The cross-sectional area of 180 mm x 180 mm was decided to accommodate the width of the passenger compartment and the banner compartment under the mid-wing. The 995 mm length is established to accommodate all the compartments comfortably; all the compartment placements are shown in \hyperref[fig:fuselage_top]{Figure~\ref*{fig:fuselage_top}}. The nose and the end of the fuselage are tapered to reduce drag without compromising strength.
 
 \subsubsection{Wing Sizing}
 To determine the optimal main wing geometry, the team conducted a configuration trade study evaluating twist, taper, dihedral, and polyhedral variations against a baseline rectangular planform. The team then simulated a uniform dihedral ranging from 1° to 10° in increments of 1°, and a polyhedral configuration with the outboard dihedral break shifting from 20 cm to the wingtip in 5 cm intervals. The data revealed that the aerodynamic benefits of these complex geometries are negligible and do not warrant the increase in manufacturing difficulty that accompanies these designs. Consequently, a simple rectangular planform was selected. Wing sizing was established through a sensitivity analysis with the aim of maximizing the mission score, which yielded a wing area of 0.64 m² and a wingspan of 1.5 m, implying a chord length of 43 cm.
@@ -1118,6 +1068,7 @@ To determine the optimal main wing geometry, the team conducted a configuration 
     \label{fig:BLheatmap}
     \vspace{-10pt}
 \end{wrapfigure}
+\vspace{1em}
 
 According to the competition rules, the banner must have a minimum length of 254 mm (10 inches) and a maximum aspect ratio of 5. To better understand the influence of banner length on Mission 3 performance, a heatmap was generated showing the variation of M3 score with respect to banner length and number of laps, as shown in Figure~\ref{fig:BLheatmap}. This analysis allowed the team to visualize the trade-off between increased scoring potential from a longer banner and the possible reduction in lap count due to additional aerodynamic drag.
 
@@ -1127,37 +1078,34 @@ After evaluating the performance trends and stability considerations, the team f
 
 
 \subsection{Aerodynamic Performance Analysis}
-Estimates of the aircraft's lift, drag, and stability characteristics were obtained through several analyses conducted in XFLR5, FLOW5, and MATLAB. The results obtained were used to continuously improve <Plane\_Name>'s design. 
+Estimates of the aircraft's lift, drag, and stability characteristics were obtained through several analyses conducted in XFLR5, FLOW5, and MATLAB. The results obtained were used to continuously improve Hell-Buoy's design. 
 
 \subsubsection{Lift and Drag Analysis}
 A preliminary lift and drag analysis was conducted using the values of $C_L$, $C_D$, and alpha that we calculated from the simulation software, FLOW5. The following graphs were obtained: Figure X shows the constant but minimal increase in $C_D$ with respect to $C_L$, and Figure Y shows the varying values of $C_L$ with the variation in alpha.
 
-
 \subsubsection{Static Stability Analysis}
-To estimate the static stability of the aircraft, the center of gravity and the Neutral point of the aircraft were calculated.The masses were extracted from the official online sources and through experiences of the previous years and placed on individual optimization variables which were given reasonable constraints. Then, using FLOW5, the neutral point and center of gravity were estimated.  As observed in the moment coefficient ($C_M$) plotted against angle of attack graph depicted in \hyperref[fig:static]{Figure~\ref*{fig:static}}, the aerodynamic stability can be determined as acceptable. Judging from where the Coefficient of moment (Cm) vs alpha graph intersects the x axis in Figure ~\ref{fig:static} we can conclude that the angle when the Cm is 0 is the angle at which the plane cruises which is around 2$^\circ$ for this plane. According to the \hyperref[fig:static]{Figure~\ref*{fig:static}}, we can conclude that the plane cruises at 20 m/s.
+
+\begin{wrapfigure}{r}{0.66\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{Cm_and_Vx_VS_a.png}
+    \caption{$C_M$ vs $\alpha$ (Left) and $V_x$ vs $\alpha$ (Right)}
+    \label{fig:static}
+\end{wrapfigure}
+
+To estimate the static stability of the aircraft, the center of gravity and the neutral point of the aircraft were calculated. The masses were extracted from the official online sources and through experiences of the previous years, and placed on individual optimization variables, which were given reasonable constraints. Then, using FLOW5, the neutral point and center of gravity were estimated.  As observed in the moment coefficient ($C_M$) plotted against angle of attack graph depicted in \hyperref[fig:static]{Figure~\ref*{fig:static}}, the aerodynamic stability can be determined as acceptable. Judging from where the Coefficient of moment (Cm) vs alpha graph intersects the x axis in Figure ~\ref{fig:static}, The corresponding angle when the Cm is 0 is the angle at which the plane cruises, which is around 2$^\circ$ for this plane. According to the \hyperref[fig:static]{Figure~\ref*{fig:static}}, we can conclude that the plane cruises at 20 m/s.
 This is also deduced by measuring the velocity corresponding to the cruise angle.
 
-\begin{center}
-    \includegraphics[width=0.8\linewidth]{vxCmalpha.png}
-    \captionof{figure}{$C_M$ vs $\alpha$ (Left) and $V_x$ vs $\alpha$ (Right)}
-    \label{fig:static}
-\end{center}
-
 \subsubsection{Dynamic Stability Analysis}
+
 The dynamic stability analysis of the plane was performed on a flow simulation software, FLOW5. Hence, we were able to simulate the stability of the system with the effects of the fuselage. The root locus of the stability control system of the lateral and longitudinal system of the plane has been displayed in the \hyperref[fig:dynamic]{Figure~\ref*{fig:dynamic}}.
 
 The aircraft’s longitudinal dynamic response shows two primary modes: the phugoid mode and the short-period mode. The phugoid mode is marginally stable, indicating that its oscillations decay very slowly over time and may persist for several cycles before settling. In contrast, the short-period mode is well damped and clearly stable, meaning that any disturbances in angle of attack or pitch rate are quickly suppressed without sustained oscillations.
 
 In the lateral-directional dynamics, the spiral mode is marginally stable, suggesting a slow tendency either to diverge or to return weakly to equilibrium. On the other hand, both the Dutch roll mode and the roll damping modes are stable. The Dutch roll mode exhibits oscillatory but decaying behavior, while the roll damping mode is non-oscillatory and highly stable. Among these, the roll damping mode demonstrates stronger stability characteristics than the Dutch roll mode, as it dissipates disturbances more rapidly and without oscillation.
 
-\begin{center}
-    \includegraphics[width=0.8\linewidth]{dynanal.png}
-    \captionof{figure}{Root Locus for Longitudinal Stability (Left) and Lateral Stability (Right)}
-    \label{fig:dynamic}
-\end{center}
+\begin{center} \includegraphics[width=0.45\linewidth]{dynanal.png} \captionof{figure}{Root Locus for Longitudinal Stability (Left) and Lateral Stability (Right)} \label{fig:dynamic} \end{center}
 
 \subsection{Propulsion System Design}
-
 
 \subsubsection{Static Thrust}
 The propulsion system configuration, consisting of a motor, Electronic Speed Controller (ESC), battery, propeller, and fuselage assembly, was meticulously selected to maximize the performance metrics for Missions~M2 and~M3. This optimization process was based on a set of carefully considered assumptions and supported by empirical data.
@@ -1189,7 +1137,7 @@ The Scorpion SIII A-5025 415KV motor was selected for its ability to provide hig
 
 The motor efficiency increases rapidly at low current levels, reaching a peak efficiency of approximately 85\%, before gradually decreasing as the current increases, as shown in \hyperref[fig:motor_eff]{Figure~\ref*{fig:motor_eff}}.
 
-To extend flight time, the team decided to limit the operating current to 50 A. Using manufacturer-provided performance data (\hyperref[tab:motor_data]{Table~\ref*{tab:motor_data}}), the thrust at 50 A was found using extrapolation to be 60.833 N when paired with a 20 × 10 in propeller. Since a 20 × 10 in propeller was not readily available, 18 × 10 in propellers were selected instead. Propeller thrust is approximately proportional to the square of the propeller diameter; therefore, the thrust was calculated accordingly to be 49.275 N per motor. With two motors, the aircraft achieves a total maximum thrust of 98.55 N, which gives a thrust-to-weight ratio of 1.395, providing adequate performance margins for all missions.
+To extend flight time, the team decided to limit the operating current to 50 A. Using manufacturer-provided performance data (\hyperref[tab:motor_data]{Table~\ref*{tab:motor_data}}), the thrust at 50 A was found using extrapolation to be 60.833 N when paired with a 20 × 10 in propeller. Since a 20 × 10 in propeller was not readily available, 16 × 14 in propellers were selected instead. Propeller thrust is approximately proportional to the square of the propeller diameter; therefore, the thrust was calculated accordingly to be 49.275 N per motor. With two motors, the aircraft achieves a total maximum thrust of 98.55 N, which gives a thrust-to-weight ratio of 1.395, providing adequate performance margins for all missions.
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{MotorEff.jpg}
@@ -1282,7 +1230,7 @@ The motor manufacturer recommends a 6S configuration for improved efficiency and
 2 $\times$ Scorpion A-5025-415 kV 
 & Tribunus ESC III 160 A 
 & 2 $\times$ 6S 2200 mAh LiPo 
-& 18$\times$10 in 
+& 16$\times$14 in 
 & 100 A \\ \hline    
 \end{tabular}
 \caption{Final Propulsion Components}
@@ -1290,22 +1238,42 @@ The motor manufacturer recommends a 6S configuration for improved efficiency and
 \end{table}
 
 \subsubsection{Wiring System}
-The team focused on streamlining the wiring to reduce both weight and complexity, which ultimately enhances repairability. All power line connections were secured through XT60 connectors and AWG14 wires. All the avionics lines utilized either AWG24 or AWG26 wires.
 
-All wires were routed through slits in the fuselage or ribs adhering to the walls of the fuselage. A pictorial depiction of the wiring diagram is shown in \hyperref[fig:wiring_dia]{Figure~\ref*{fig:wiring_dia}}. Apart from this, a 100 A "blade"-style fuse was attached to the positive terminal of each of the propulsion batteries to prevent current surges from damaging the ESC or the motor. Additionally, a toggle switch was attached to the receiver power line to externally control all the avionics separately from the propulsion system. A separate 3S 1500 mAh LiPo Battery powers the avionics. MG995 servos were used for the control surfaces as well as the banner mechanism. 
-\begin{figure}[H]
+\begin{wrapfigure}{r}{0.65\textwidth}
     \centering
-    \includegraphics[width=0.8\textwidth]{wiring2.png}
+    \includegraphics[width=\linewidth]{wiring3.png}
     \caption{Wiring Diagram}
     \label{fig:wiring_dia}
-\end{figure}
+\end{wrapfigure}
+
+The team focused on streamlining the wiring to reduce both weight and complexity, which ultimately enhances repairability. All power line connections were secured through XT60 connectors and AWG14 wires. All the avionics lines utilized either AWG24 or AWG26 wires.
+
+All wires were routed through slits in the fuselage or ribs adhering to the walls of the fuselage. A pictorial depiction of the wiring diagram is shown in \hyperref[fig:wiring_dia]{Figure~\ref*{fig:wiring_dia}}. Apart from this, a 100 A "blade"-style fuse was attached to the positive terminal of each of the propulsion batteries to prevent current surges from damaging the ESC or the motor. Additionally, a toggle switch was attached to the receiver power line to externally control all the avionics separately from the propulsion system. A separate 4S 2200 mAh LiPo Battery powers the avionics. MG995 servos were used for the control surfaces as well as the banner mechanism. 
+
 
 \subsection{Predicted Flight \& Mission Performance}
 The mission performance scores were estimated using the mission scoring equations (Equations~\ref{eq:m1}--\ref{eq:GM}). As specified in the rules, the M2 and M3 scores are normalized relative to the highest-performing team.
 
 Based on historical competition data, the best team’s net income for M2 was predicted to be 441.35, assuming a payload of 15 rubber ducks, 5 hockey pucks, and the completion of 7 laps. For M3, the highest anticipated subscore was estimated to be 210.8, corresponding to a 30-inch banner length and 7 completed laps.
 
-A target lap time of 42.8 seconds was established for both missions to ensure that seven laps could be completed within the allotted flight time. Using these assumptions, the final normalized score for Mission 2 was calculated to be 1.58, comprising 1.0 point for successful mission completion and 0.58 points from the normalized mission score. Similarly, the predicted score for Mission 3 was 2.67, consisting of 2.0 points for completion and 0.67 points derived from the normalized mission score. 
+For the final configuration, the aircraft flies the straight sections at 20~m/s and performs the turns at 16~m/s with a bank angle of $60^\circ$. At $60^\circ$, the load factor is 
+\[
+n = \frac{1}{\cos 60^\circ} = 2,
+\]
+meaning the aircraft experiences $2g$ during the turns. Using the coordinated turn relation
+\[
+R = \frac{V^2}{g \tan \theta},
+\]
+the turning radius is calculated as $15.07~\text{m}$. The circumference of one full $360^\circ$ turn is therefore $94.66~\text{m}$, resulting in a turn time of $5.92~\text{s}$ at 16~m/s. Since the lap consists of two full turns, the total turning time is $11.84~\text{s}$. 
+
+Each straight section is $152.4~\text{m}$ long (500~ft), and at 20~m/s each straight takes $7.62~\text{s}$. With four straights, the total straight-line time is $30.48~\text{s}$. Adding the straight and turning times gives a total lap time of $\mathbf{42.32~\text{s}}$.
+
+It should be noted that at a $60^\circ$ bank, the stall speed increases by a factor of $\sqrt{2}$ (1.414). Therefore, to safely maintain 16~m/s in the turn, the aircraft’s level-flight stall speed must not exceed approximately $11.31~\text{m/s}$. SInce the stall speed is 10 m/s the plane can comfortably bank at  $60^\circ$.
+
+
+A target lap time of 42.8 seconds was established accounting for the small errors from the calculations to real life performances for both missions to ensure that seven laps could be completed within the allotted flight time. Using these assumptions, the final normalized score for Mission 2 was calculated to be 1.58, comprising 1.0 points for successful mission completion and 0.58 points from the normalized mission score. Similarly, the predicted score for Mission 3 was 2.67, consisting of 2.0 points for completion and 0.67 points derived from the normalized mission score. 
+
+
 
 \subsection{Differences In Test Conditions}
 Design decisions were made with careful consideration of testing and fly-off conditions. The average climate in Mormugao, Goa, during late January and early February was assumed for the testing conditions. The expected weather conditions at Wichita, Kansas, in April—taking into consideration the higher average wind speeds on the airfield—were assumed for the fly-off conditions. A comparative summary of these environmental parameters is provided in \hyperref[tab:climate_conditions]{Table~\ref*{tab:climate_conditions}}.
@@ -1328,6 +1296,7 @@ Design decisions were made with careful consideration of testing and fly-off con
 \label{tab:climate_conditions}
 \end{table}
 
+\newpage
 \section{Detailed Design}
 Utilizing the results from the preliminary design, the detailed design sought to optimize the structure and payloads of the aircraft to achieve the desired requirements, with emphasis on reducing weight and reducing GM times.
 
@@ -1359,13 +1328,13 @@ Utilizing the results from the preliminary design, the detailed design sought to
         
         \multicolumn{2}{|c|}{\cellcolor{y}\textbf{Motor Detailed Specifications}} & \textcolor{gray!5}{Receiver} & \footnotesize Radiomaster ER8 ELRS 2.4 \\ \hline
         \textcolor{gray!5}{Model} & Scorpion A-5025 & \textcolor{gray!5}{Servos} & MG995 \\ \hline
-        \textcolor{gray!5}{kV} & 415 kV & \textcolor{gray!5}{Battery Model} & 1500 mAh \\ \hline
-        \textcolor{gray!5}{Power Rating} & 3441 W & \textcolor{gray!5}{Cell Count} & 3S \\ \hline
+        \textcolor{gray!5}{kV} & 415 kV & \textcolor{gray!5}{Battery Model} & 2200 mAh \\ \hline
+        \textcolor{gray!5}{Power Rating} & 3441 W & \textcolor{gray!5}{Cell Count} & 4S \\ \hline
         \textcolor{gray!5}{No-Load Current} & 2.15 A & \textcolor{gray!5}{Transmitter} & Radiomaster TX16S \\ \hline
         \textcolor{gray!5}{Cell Count} & 6S & \multicolumn{2}{c|}{\cellcolor{y}\textbf{Propulsion}} \\ \hline
         \textcolor{gray!5}{Weight} & 0.523 kg & \textcolor{gray!5}{Battery} & 2x 6S 2200 mAh \\ \hline
 
-        \multicolumn{2}{|c|}{\cellcolor{y}\textbf{Control Surface Sizing}} & \textcolor{gray!5}{Propeller Dimensions} & 18x10 \\ \hline
+        \multicolumn{2}{|c|}{\cellcolor{y}\textbf{Control Surface Sizing}} & \textcolor{gray!5}{Propeller Dimensions} & 16x14 \\ \hline
         \textcolor{gray!5}{\footnotesize Aileron (\% of chord)} & 32.588\% & \textcolor{gray!5}{ESC} & \footnotesize Scorpion Tribunus III 160A \\ \hline
         \textcolor{gray!5}{Ailerons (m)} & 0.14 m & \textcolor{gray!5}{Fuse} & \footnotesize 100A \\ \hline
         \textcolor{gray!5}{\footnotesize Rudder (\% of chord)} & 32.588\% & \multicolumn{2}{|c|}{\cellcolor{y}\textbf{Center of Gravity}} \\ \hline
@@ -1392,9 +1361,9 @@ Utilizing the results from the preliminary design, the detailed design sought to
 \end{wrapfigure}
 
 
-   The main structure of the fuselage, as shown in the \hyperref[fig:fuselage_design]{Figure~\ref*{fig:fuselage_design}}, is primarily made of Aeroply, which offers an excellent strength-to-weight ratio and practical manufacturing via laser cutting. The formers are made from 5 mm Aeroply to provide rigidity and strength to the fuselage. The longerons are also made from 5 mm Aeroply, and each former is connected to multiple longerons. The landing gear was sandwiched between 2 horizontal 5 mm Aeroply plates, which were constrained between 2 formers. The wing mount plate was made from 5 mm Aeroply and is connected to multiple formers. All the connections between the formers, longerons, wing-mount plate, and landing gear ensure that the forces are evenly distributed throughout the fuselage and do not accumulate at a single point. The banner box, avionics, and hockey puck base plate were made from 5 mm aeroply. A total of 14 formers, 5 pairs of longerons of different sizes were used to provide the strength needed for the fuselage.
+   The main structure of the fuselage, as shown in the \hyperref[fig:fuselage_design]{Figure~\ref*{fig:fuselage_design}}, is primarily made of Aeroply, which offers an excellent strength-to-weight ratio and practical manufacturing via laser cutting. The formers are made from 5 mm Aeroply to provide rigidity and strength to the fuselage. The longerons are also made from 5 mm Aeroply, and each former is connected to multiple longerons. The landing gear was sandwiched between 2 horizontal 5 mm Aeroply plates, which were constrained between 2 formers. The wing mount plate was made from 5 mm Aeroply and is connected to multiple formers. All the connections between the formers, longerons, wing-mount plate, and landing gear ensure that the forces are evenly distributed throughout the fuselage and do not accumulate at a single point. The banner box, avionics, and hockey puck base plate were made from 5 mm Aeroply. A total of 14 formers, 5 pairs of longerons of different sizes were used to provide the strength needed for the fuselage.
 
-The fuselage outer walls was made from 2 mm Aeroply for its lightweight. 2 mm Aeroply was used for internal walls for the avionics, cargo, and passenger compartment areas, to ensure internal components are secure. The cargo compartment is also used for holding ballast during M1. Small internal guide walls made from 5 mm balsa are used to guide the cargo and passenger compartments in and out of the fuselage. The hatches are made from 5 mm balsa for their low weight and their resistance to bending.
+The fuselage outer walls were made from 2 mm Aeroply for its lightweight. 2 mm Aeroply was used for internal walls for the avionics, cargo, and passenger compartment areas, to ensure internal components are secure. The cargo compartment is also used for holding ballast during M1. Small internal guide walls made from 5 mm balsa are used to guide the cargo and passenger compartments in and out of the fuselage. The hatches are made from 5 mm balsa for their low weight and their resistance to bending.
 
 Canopy locks are used to secure the hatches shut; they were chosen for their reliability. 3D-printed CFRP rod holders were used for their ability to wrap around the CFRP rod and constrain it in place. These 3D-prints were fixed to ribs with screws and lock nuts, and were located on 3 ribs to ensure a strong connection to the CFRP rod that holds the empennage.
 
@@ -1404,22 +1373,16 @@ All the components were fixed together by employing rectangular extrusions and c
 
 \subsubsection{Rubber Duck and Hockey Puck Compartment Design}
 
-\subsubsubsection{Passenger Module Overview and Material Selection}
+\subsubsubsection{\textbf{Passenger Compartment}}
 
 A dedicated passenger module was developed as a permanent installation within the fuselage for carrying the passengers. The internal layout follows a 2-by-5 configuration, with two passengers seated side by side across 5 longitudinal rows, for a total capacity of 10. The box measures 12.5 cm wide by 40 cm long, allowing all passengers to remain on a single horizontal plane. This arrangement distributes the payload along the fuselage, avoiding localized center-of-gravity shifts while efficiently using the available internal volume.
 
-
 Earlier concepts investigated the use of individual compartments and a ribbon-style restraint system. The compartment approach introduced unnecessary structure and conflicted with the requirement for an open passenger space, while the ribbon system did not consistently prevent motion during testing. These approaches were therefore replaced by a mechanical clip-based restraint that could secure each passenger without enclosing them.
 
+Each passenger location includes an individual horseshoe-shaped clip mounted on a transverse support rod. The rod itself is fixed to the structure and is also free to rotate independently about its own. The clips are manufactured from Polyethylene Terephthalate Glycol(PETG), which is used because it provides enough ductility to elastically deform and snap securely around the passenger while maintaining strength and durability over repeated use.
+During loading, a clip is rotated upward about its pivot to create clearance. The passenger is then positioned and pressed into the horseshoe feature, after which the clip is rotated back down to its original orientation. Once returned to this position, the PETG's elastic deformation generates a continuous clamping force around the duck's neck, restraining it against vertical, lateral, and longitudinal motion. Because each rod operates independently, passengers can be installed one at a time without interference from adjacent rows, allowing straightforward sequential loading.
 
-Each passenger location includes an individual horseshoe-shaped clip mounted on a transverse support rod. The rod itself is fixed to the structure and is also free to rotate independently about its own. The clips are manufactured from Acrylonitrile butadiene styrene (ABS), which is used because it provides enough ductility to elastically deform and snap securely around the passenger while maintaining strength and durability over repeated use.
-During loading, a clip is rotated upward about its pivot to create clearance. The passenger is then positioned and pressed into the horseshoe feature, after which the clip is rotated back down to its original orientation. Once returned to this position, the TPU's elastic deformation generates a continuous clamping force around the duck's neck, restraining it against vertical, lateral, and longitudinal motion. Because each clip operates independently, passengers can be installed one at a time without interference from adjacent rows, allowing straightforward sequential loading.
-
-
-This approach keeps the mechanism mechanically simple while still providing positive retention. The open layout also accommodates small variations in passenger size without requiring tight tolerances. Loads from the restrained passengers are transmitted from the TPU clips into the support rod and then into the Depron base, which distributes them into the fuselage through a direct load path appropriate for the relatively small payload mass.
-
-
-Access to the compartment is provided through a hinged door located above the passenger bay. The door remains attached to the aircraft through its hinge in both open and closed positions. A spring-loaded piston latch secures the door during flight; actuating an external lever releases the latch for opening, and releasing it re-engages the lock. This provides a positive mechanical closure while allowing quick access during loading and unloading.
+Access to the compartment is provided through a hinged door located above the passenger bay. The door remains attached to the aircraft through its hinge in both open and closed positions. The door itself has cutouts which are monokoted transparently which allow the inspector to confirm restriction of movements. A canopy lock secures the door during flight. This provides a positive mechanical closure while allowing quick access during loading and unloading.
 The resulting system combines a fixed lightweight compartment with individually rotating flexible clips, providing secure passenger restraint, simple operation, and minimal structural complexity while maintaining compliance with the mission loading requirements.
 
 \begin{figure}[h!]
@@ -1438,13 +1401,14 @@ The resulting system combines a fixed lightweight compartment with individually 
         \label{fig:fuse_puck}
     \end{minipage}
 \end{figure}
-
+\subsubsubsection{\textbf{Hockey Puck Compartment}}
+\newline
 The compartment stores 3 hockey pucks as determined by sensitivity analysis in section ~\ref{sec:sensi}, and its dimensions are {110 mm x 965 mm x 965 mm}. The compartment is completely made from {5 mm} Depron sheets for its lightweight property. These sheets are cut into the desired shapes, assembled, and glued together with hot glue. The compartment is designed to be removed from the fuselage for better accessibility.
 
 The compartment consists of 2 parts: the main body, which holds the hockey pucks, and the hinged top, which serves as the lid. The holding compartment is a box without a top, with the top half of one side cut out. This is done to make it easier to access the hockey puck inside the compartment. The hinged lid consists of the top cover and extends down to half of one of the rectangular sides. The whole compartment is divided into 3 sub-compartments by 2 vertical walls in the main body, and each of these sub-compartments has quarter walls with circular cutouts on both the main body and lid, as shown in the \hyperref[fig:puck_circ]{Figure~\ref*{fig:puck_circ}}. This ensures the packs are constrained when closed.
 
 The dimensions of the compartment were designed such that it fits exactly inside the fuselage and was constrained horizontally, and the lid stays closed. There are rectangle holes on the lid of the cargo compartment, these holes are covered with see-through monokote. These are made so that the tech inspector can verify that the cargo is restrained. A quick-connect lock, along with straps connecting to the fuselage as shown in the \hyperref[fig:fuse_puck]{Figure~\ref*{fig:fuse_puck}}, ensures the compartment is vertically constrained, when inside the aircraft.
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \begin{minipage}{0.48\textwidth}
         \centering
@@ -1463,7 +1427,7 @@ The dimensions of the compartment were designed such that it fits exactly inside
 
 
 \subsubsection{Detailed Wing Design}
-{<plane name>} features a modular wing with a {75 cm} semi-span (150~cm total wingspan), a {43 cm} chord, and an aspect ratio of {3.48}. To support modularity and operational flexibility, each side of the wing is partitioned into three functional segments: An outboard {Aileron Section} of {33.5 cm} for lateral control, a central {Motor Mount Section} of {8 cm} which is reinforced to house the propulsion and ESC units, and an inboard {Wing Section} of {24.5 cm} that serves as the primary lifting surface.
+The aircraft features a modular wing with a {75 cm} semi-span (150~cm total wingspan), a {43 cm} chord, and an aspect ratio of {3.48}. To support modularity and operational flexibility, each side of the wing is partitioned into three functional segments: An outboard {Aileron Section} of {33.5 cm} for lateral control, a central {Motor Mount Section} of {8 cm} which is reinforced to house the propulsion and ESC units, and an inboard {Wing Section} of {24.5 cm} that serves as the primary lifting surface.
 
 
 This modular architecture allows independent redesign or replacement of specific components, such as upgrading the propulsion system, without necessitating changes to the structural or aerodynamic profile of the remaining segments.
@@ -1480,7 +1444,7 @@ The wing's lift distribution was calculated using Schrenk’s Approximation in  
 \Filler
 Detailed Shear Force (SFD) and Bending Moment (BMD) diagrams are presented in Figure~\ref{fig:sfd_bmd}, where the SFD exhibits a linear profile characteristic of the rectangular wing planform. Notable ``steps'' or dips in the magnitude of the SFD and BMD occur at 37.5~cm from the aircraft center, representing the significant inertial load relief provided by the weight of the motor and ESC mounted at that station.
 \Filler
-\begin{figure}{\textwidth}
+\begin{figure}[H]{\textwidth}
     \centering
     \includegraphics[width=0.43\textwidth]{SFD and BMD.png}
     \captionof{figure}{Wing Shear Force and Bending Moment Diagrams}
@@ -1493,9 +1457,9 @@ Detailed Shear Force (SFD) and Bending Moment (BMD) diagrams are presented in Fi
 The motor mount is constructed from Aeroply. We used Ansys Discovery to test the total stress acting on the motor mount and the maximum displacement it would experience. The chosen motors, when used with the appropriate 20 inch propellers, produce a maximum thrust of 10 KgF. We ran the Ansys simulation using a F.O.S of 1.5, using 15 KgF for the tests. We got the max stress experienced to be 3.88e6 Pa and the maximum displacement to be 1.14e-5 m,  which is well under the limit for the material chosen for construction.
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.48\linewidth]{displacement MM.png}
+    \includegraphics[width=0.48\textwidth]{displacement MM.png}
     \hfill
-    \includegraphics[width=0.48\linewidth]{shear stress MM.png}
+    \includegraphics[width=0.48\textwidth]{shear stress MM.png}
     \caption{Finite element analysis results for the Motor Mount: (left) Deformation Analysis, (right) Shear Stress Analysis}
     \label{fig:motor_mount_fea}
 \end{figure}
@@ -1523,7 +1487,7 @@ The assembly is bonded using a hybrid adhesive approach tailored to specific mat
 
 
 \subsubsection{Detailed Landing Gear Design}
-The aircraft employs a taildragger landing gear configuration. The front wheels of the landing gear are 3D-printed from TPU due to its flexibility and energy-absorbing characteristics. By optimizing the infill density and pattern during 3D printing, the wheels provide a passive suspension.The wheels are directly mounted on the axles without intermediate bearings and frictional contact at the interface can lead to heat generation during takeoff and landing. 3D-printed ABS was selected for the wheel rims due to its higher strength and superior heat resistance compared to other materials, ensuring dimensional stability. The main landing gear wheels are mounted on a CFRP strut, which was manufactured to give the required propeller clearance of 27 cm, considering a 16 inch propeller. The landing gear has a wheelbase of 425 mm. The strut is secured between two 5 mm Aeroply sheets and mounted under the fuselage. The tail wheel is a 360-degree freely rotating castor wheel which improves ground maneuverability during taxiing. 
+The aircraft employs a taildragger landing gear configuration. The front wheels of the landing gear are 3D-printed from TPU due to its flexibility and energy-absorbing characteristics. By optimizing the infill density and pattern during 3D printing, the wheels provide a passive suspension. The wheels are directly mounted on the axles without intermediate bearings and frictional contact at the interface can lead to heat generation during takeoff and landing. 3D-printed ABS was selected for the wheel rims due to its higher strength and superior heat resistance compared to other materials, ensuring dimensional stability. The main landing gear wheels are mounted on a CFRP strut, which was manufactured to give the required propeller clearance of 27 cm, considering a 16 inch propeller. The landing gear has a wheelbase of 425 mm. The strut is secured between two 5 mm Aeroply sheets and mounted under the fuselage. The tail wheel is a 360-degree freely rotating castor wheel which improves ground maneuverability during taxiing. 
 An FEA study was conducted using a simulated load factor of 2. The maximum stress is experienced at the corner of the top mounting plate, with a magnitude of 109.94 MPa, which is below the ultimate tensile strength, is approximately 3500-4000 MPa, and thus this mount was chosen for the main landing gear.
 \Filler
 
@@ -1589,16 +1553,22 @@ The banner deployment system is housed within a dedicated cavity integrated into
 \end{figure}
 
 \newline
-The mechanism's architecture centers around two independently servo-actuated Aeroply doors positioned at opposite ends of the enclosure, designed to resist warping and form a staged sequence for deployment and release. A CFRP support rod carrying the banner is positioned above these doors, utilizing a fixed pin that interfaces with shaped grooves integrated into the door structure. This pin-and-groove interface, acting in tandem with an internal upper surface within the cavity, kinematically constrains the rod to prevent unintended vertical, lateral, or longitudinal displacement. To prevent the banner from sliding axially during deployment and towing, an internal rubber band is secured into small locational indents near the rod's ends. This simple retaining feature allows for easy installation while firmly securing the payload. Additionally, a small ballast weight incorporated near the lower end of the rod generates a restoring moment to maintain the banner in a strict vertical orientation throughout the flight. The primary deployment sequence is initiated by actuating the first door. To ensure the door rotates fully open consistently across various flight conditions and dynamic pressures, elastic rubber bands provide a mechanical opening assist. This stored energy guarantees that the deployment sequence does not rely solely on gravity or airflow. As the primary door opens, the carbon-fiber rod rotates outward, effectively pivoting on the secondary door's pin-and-groove interface until it engages a mechanical stopper that fixes its position at a highly repeatable 90-degree angle relative to the fuselage. At this stage, the rod remains hinged on the secondary door, and the exposed pleated banner unfurls cleanly into the airflow beneath the aircraft. In-flight release is finally achieved by actuating the secondary door. Opening this door removes the final kinematic constraint on the support pin, allowing the carbon-fiber rod and the attached banner to disengage completely from the airframe. Once unsupported, gravity and aerodynamic drag smoothly carry the assembly away without requiring complex, auxiliary ejection hardware. Ultimately, this combination of an internally integrated housing, elastic-assisted double-door actuation, and a kinematically constrained support rod ensures compact stowage, highly reliable deployment, controlled towing geometry, and clean in-flight release while maintaining overall mechanical simplicity and low structural weight.
+The mechanism's architecture relies on two independently servo-actuated Aeroply doors at opposite ends of the enclosure. A CFRP support rod carrying the banner rests above these doors. A fixed pin on the rod interfaces with shaped grooves on the cavity's upper surface, kinematically constraining the rod to prevent any unintended vertical, lateral, or longitudinal displacement during flight.
+
+To prevent the banner from sliding axially during deployment and towing, a rubber band secures it into small indents near the rod's ends. This provides simple installation while firmly securing the banner. Additionally, a small ballast weight at the bottom of the rod generates a restoring moment, keeping the towed banner vertical during flight.
+
+Deployment begins by actuating the primary door, which uses elastic rubber bands as a mechanical opening assist to reliably overcome dynamic flight pressures rather than relying solely on gravity. As this door opens, the CFRP rod pivots outward on the secondary door's groove until it hits a mechanical stopper. This locks the rod at a precise 90-degree angle to the fuselage, allowing the pleated banner to unfurl cleanly into the slipstream.
+
+In-flight release is achieved by actuating the secondary door. This removes the final constraint on the support pin, allowing gravity and aerodynamic drag to smoothly pull the rod and banner away from the airframe without requiring complex ejection hardware. Ultimately, this double-door architecture ensures compact stowage, highly reliable deployment, and a clean release while maintaining structural simplicity and low weight.
 \Filler
 
 \subsection{Avionics and Wiring}
-The avionics system for the {<plane name>} is illustrated by {avionics diagram}. 
+The avionics system for the aircraft  is illustrated by {avionics diagram}. 
 Working alongside the structural team, repairability was considered to be a primary design objective, and all avionics were located in accessible sections, allowing for quick inspection and servicing. \\ The propulsion system comprises a dual-puller configuration of two Scorpion A-5025-415 kV BLDC motors each powered by an independent 6S 2200 mAh LiPo battery through a Scorpion Tribunus III ESC. Each ESC is connected to its respective propulsion battery through a 100 A fuse to ensure overcurrent protection and compliance with safety requirements.\\ 
-A separate 3S 1500 mAh LiPo battery is used to power all the other avionics on board the plane via an avionics BEC. An 8-channel receiver was used, which facilitates the control of all actuators on the plane.
+A separate 4S 2200 mAh LiPo battery is used to power all the other avionics on board the plane via an avionics BEC. An 8-channel receiver was used, which facilitates the control of all actuators on the plane.
 
  
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{avionics.png}
     \caption{Avionics Diagram}
@@ -1607,118 +1577,67 @@ A separate 3S 1500 mAh LiPo battery is used to power all the other avionics on b
 \Filler
 
 \subsection{Weight And Balance}
+
+% ==========================================
+% TABLE 1: PAYLOAD MASS DISTRIBUTION
+% ==========================================
+% ==========================================
+% TABLE 1: MISSION PAYLOAD
+% ==========================================
+% ==========================================
+% TABLE 1: MISSION PAYLOAD
+% ==========================================
 \begin{table}[H]
 \centering
-
-\label{tab:component_layout}
-
-\setlength{\tabcolsep}{4pt} % reduce column spacing
-\renewcommand{\arraystretch}{1.0} % reduce row height
+\small 
+\setlength{\tabcolsep}{4pt} 
+\renewcommand{\arraystretch}{1.1} 
 
 \begin{tabular}{|>{\columncolor{db}}l|c|c|c|c|c|c|c|}
 \hline
+\rowcolor{y} & \multicolumn{2}{c|}{\textbf{M1}} & \multicolumn{2}{c|}{\textbf{M2}} & \multicolumn{2}{c|}{\textbf{M3}} & \\ \cline{2-7}
+\rowcolor{y} \multirow{-2}{*}{\textbf{Payload Item}} & \textbf{X (m)} & \textbf{Y (m)} & \textbf{X (m)} & \textbf{Y (m)} & \textbf{X (m)} & \textbf{Y (m)} & \multirow{-2}{*}{\textbf{Weight (kg)}} \\ \hline
 
-
-
-
-\rowcolor{y}
-& \multicolumn{2}{c|}{\cellcolor{y}\textbf{M1}} 
-& \multicolumn{2}{c|}{\cellcolor{y}\textbf{M2}} 
-& \multicolumn{2}{c|}{\cellcolor{y}\textbf{M3}} 
-& \multirow{1}{*}{\cellcolor{y}\textbf{Weight}}\\
-\cline{2-7}
-\multirow{-2}{*}{\cellcolor{y}{\textbf{Component}}}  \cellcolor{y} 
-& \cellcolor{y}\textbf{X (m)} & \cellcolor{y}\textbf{Y (m)}
-& \cellcolor{y}\textbf{X (m)} & \cellcolor{y}\textbf{Y (m)}
-& \cellcolor{y}\textbf{X (m)} & \cellcolor{y}\textbf{Y (m)}
-& \cellcolor{y} \\ 
-
-\hline
-
-
-% Data
-\textcolor{gray!5}{Fuselage} & ---  &---& --- &--- &---  &--- & 1.920 kg \\
-\hline
-\textcolor{gray!5}{Rubber Duck 1 } &---  &---  & 0.10 m    &0.05 m  &---  &---  &0.022 kg  \\
-\hline
-\textcolor{gray!5}{Rubber Duck 2 } &---  &---  &0.10 m &-0.05 m  &---  &---  &0.022 kg \\
-\hline  
-\textcolor{gray!5}{Rubber Duck 3 } &---  &---  &0.15 m  &0.05 m  &---  &---  &0.022 kg \\
-\hline
-\textcolor{gray!5}{Rubber Duck 4 } &---  &---  &0.15 m &-0.05 m  &---  &---  &0.022 kg \\
-\hline
-\textcolor{gray!5}{Rubber Duck 5 } &---  &---  &0.20 m  &0.05 m  &---  &---  &0.022 kg \\
-\hline
-\textcolor{gray!5}{Rubber Duck 6} &---  &---  &0.20 m  &-0.05 m  &---  &---  &0.022 kg \\
-\hline
-\textcolor{gray!5}{Rubber Duck 7 } &---  &---  &0.25 m  &0.05 m  &---  &---  &0.022 kg \\
-\hline
-\textcolor{gray!5}{Rubber Duck 8 } &---  &---  &0.25 m  &-0.05 m  &---  &---  &0.022 kg \\
-\hline
-\textcolor{gray!5}{Rubber Duck 9 } &---  &---  &0.30 m  &0.05 m  &---  &---  &0.022 kg \\
-\hline
-\textcolor{gray!5}{Rubber Duck 10 }&---  &---  &0.30 m  &-0.05 m  &---  &---  &0.022 kg \\
-\hline
-\textcolor{gray!5}{Hockey Puck 1 }&---  &---  &-0.25 m  &0.00 m &---  &---  &0.170 kg \\
-\hline
-\textcolor{gray!5}{Hockey Puck 2 }&---  &---  &-0.25 m  &0.02 m &---  &---  &0.170 kg \\
-\hline
-\textcolor{gray!5}{Hockey Puck 3 }&---  &---  &-0.25 m  &-0.02 m  &---  &---  &0.170 kg \\
-\hline
-\textcolor{gray!5}{Banner }&---&---  &---  &---  &  &  &  \\
-\hline
-
-
-
-
+\textcolor{gray!5}{Fuselage (Empty)} & --- & --- & --- & --- & --- & --- & 1.920 \\ \hline
+\textcolor{gray!5}{Rubber Ducks 1 \& 2} & --- & --- & 0.10 & $\pm 0.05$ & --- & --- & $2 \times 0.022$ \\ \hline
+\textcolor{gray!5}{Rubber Ducks 3 \& 4} & --- & --- & 0.15 & $\pm 0.05$ & --- & --- & $2 \times 0.022$ \\ \hline
+\textcolor{gray!5}{Rubber Ducks 5 \& 6} & --- & --- & 0.20 & $\pm 0.05$ & --- & --- & $2 \times 0.022$ \\ \hline
+\textcolor{gray!5}{Rubber Ducks 7 \& 8} & --- & --- & 0.25 & $\pm 0.05$ & --- & --- & $2 \times 0.022$ \\ \hline
+\textcolor{gray!5}{Rubber Ducks 9 \& 10} & --- & --- & 0.30 & $\pm 0.05$ & --- & --- & $2 \times 0.022$ \\ \hline
+\textcolor{gray!5}{Hockey Puck 1} & --- & --- & $-0.25$ & 0.00 & --- & --- & 0.170 \\ \hline
+\textcolor{gray!5}{Hockey Pucks 2 \& 3} & --- & --- & $-0.25$ & $\pm 0.02$ & --- & --- & $2 \times 0.170$ \\ \hline
+\textcolor{gray!5}{Banner} & --- & --- & --- & --- & --- & --- & $[W]$ \\ \hline
 \end{tabular}
-\caption{Mass Distribution Table}
+\caption{Mission Payload Mass Distribution}
+\label{tab:payload_distribution}
 \end{table}
-%---------------------------------
-%new table trial
-%---------------------------------
+
+\vspace{-1em}
+
+% ==========================================
+% TABLE 2: COMPONENT WEIGHT & BALANCE
+% ==========================================
 \begin{table}[H]
 \small
 \centering
+\renewcommand{\arraystretch}{1.2}
+
+\begin{tabularx}{\textwidth}{|>{\columncolor{db}\raggedright\arraybackslash}p{2.8cm}|>{\centering\arraybackslash}p{2.5cm}|>{\centering\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}X|}
+\hline
+\rowcolor{y} \textbf{Component} & \textbf{Assumed Mass (kg)} & \textbf{Measured Mass (kg)} & \textbf{Placement} \\ \hline
+
+\textcolor{gray!5}{Main Wing} & 1.000 & 0.998 & --- \\ \hline
+\textcolor{gray!5}{Elevator} & 0.400 & 0.560 & --- \\ \hline
+\textcolor{gray!5}{Fin} & 0.200 & 0.140 & --- \\ \hline
+\textcolor{gray!5}{Fuselage} & 1.920 & 1.670 & --- \\ \hline
+\textcolor{gray!5}{Battery} & 0.600 & 0.600 & 0.15 m in front of LE \\ \hline
+\textcolor{gray!5}{Motors (L \& R)} & $2 \times 0.700$ & $2 \times 0.700$ & $\pm 0.375$ m from root \\ \hline
+\textcolor{gray!5}{ESCs (x2)} & $2 \times 0.300$ & $2 \times 0.300$ & 0.10 m behind motors \\ \hline
+\textcolor{gray!5}{Main Gear (L \& R)} & $2 \times 0.175$ & $2 \times 0.102$ & $0.10$ m aft LE, $\pm 0.20$ m from root, $0.20$ m below LE \\ \hline
+
+\end{tabularx}
+\caption{Component Weight and Balance}
 \label{tab:component_layout}
-
-%\begin{tabular}{|>{\columncolor{db}}l|c|c|c|c|c|}
-\begin{tabular}{|>{\columncolor{db}}p{3cm}|p{3cm}|p{3cm}|p{8cm}|}
-\hline
-\cellcolor{y}\textbf{Objects} 
-& \cellcolor{y}\textbf{Masses (Assumed for simulation)} 
-& \cellcolor{y}\textbf{Masses (Measured in reality)} 
-& \cellcolor{y}\textbf{Placement}  \\
-\hline
-
-
-% Data
-
-\textcolor{gray!5}{Main Wing} & 0.800 kg + 0.200 kg (reinforcements) &0.848 kg + 0.150 kg& --- \\ 
-\hline
-\textcolor{gray!5}{Elevator} & 0.400 kg & 0.560 kg& --- \\ 
-\hline
-\textcolor{gray!5}{Fin} & 0.200 kg &0.140 kg& ---  \\ 
-\hline
-\textcolor{gray!5}{Fuselage} & 1.920 kg & 1.670 kg & --- \\ 
-\hline
-\textcolor{gray!5}{Battery} & 0.600 kg &0.600 kg& 0.15 m in front of the leading edge \\ 
-\hline
-\textcolor{gray!5}{Motor 1} & 0.700 kg &0.700 kg& 0.375 m on the right side of the wing from the wing root \\ 
-\hline
-\textcolor{gray!5}{Motor 2} & 0.700 kg & 0.700 kg &0.375 m on the left side of the wing from the wing root  \\ 
-\hline
-\textcolor{gray!5}{ESC 1} & 0.300 kg & 0.300 kg & 0.10 m behind motor 1 \\ 
-\hline
-\textcolor{gray!5}{ESC 2} & 0.300 kg & 0.300 kg & 0.10 m behind motor 2 \\ 
-\hline
-\textcolor{gray!5}{Landing Gear (Left Wheel)} & 0.175 kg & 0.102 kg& 0.10 m behind the leading edge, 0.20 m from the wing root, 0.20 m below the leading edge \\ 
-\hline
-\textcolor{gray!5}{Landing Gear (Right Wheel)} & 0.175 kg & 0.102 kg & 0.10 m behind the leading edge, 0.20 m from the wing root, 0.20 m below the leading edge \\ 
-\hline
-
-\end{tabular}
-\caption{Weight and Balance}
 \end{table}
 
 % end trial----------------------------------
@@ -1728,7 +1647,7 @@ A separate 3S 1500 mAh LiPo battery is used to power all the other avionics on b
 \subsection{Flight and Mission Performance}
 \hyperref[tab:Team_org]{Table~\ref*{tab:final_performance}} summarizes flight mission performances and expected scores in comparison to hypothetical
 best-performing teams. Our expected total score is 5.8674.
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \renewcommand{\arraystretch}{1.5}
 
@@ -1796,19 +1715,34 @@ best-performing teams. Our expected total score is 5.8674.
 \end{table}
 
 \subsection{Drawing Package}
-\Filler
+\newpage
 
-% ----------------------------
-% 6. Manufacturing Plan
-% ----------------------------
 \section{Manufacturing Plan}
-
 
 \subsection{Manufacturing processes Investigated}
 \subsubsection{3D Printing}
 3D printing allows the manufacturing of custom components at a lower price and in a shorter time period than other manufacturing methods. This is beneficial for quick prototyping and ease of design modifications. 3D printing is generally used for smaller parts, as the weight increases significantly while printing larger components, and their mechanical strength also diminishes. 3D-printed components are only used in load-bearing structures in the aircraft.\Filler
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4,\textwidth]{ducks 3d print.PNG}
+    \caption{3d printed ducks}
+    \label{fig:wiring}
+\end{figure}
+
+\Filler
+
+
 \subsubsection{Laser Cutting}
  Laser cutting is a process commonly used for wood and acrylic that allows quick and precise cutting of parts into desired shapes. This production method was used to manufacture all wing and fuselage components (ribs, spars, and stringers) and their outer skins from balsa and Aeroply sheets. The laser kerf was accounted for while manufacturing components using this process.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{laserCutting.jpg}
+    \caption{Laser Cutting}
+    \label{fig:wiring}
+\end{figure}
+\Filler 
  
 \Filler
 
@@ -1830,22 +1764,36 @@ After an investigation into manufacturing processes and materials, we determined
 \Filler
 \subsubsection{Wing}
 
-\begin{figure}[H]
-\centering
-\begin{minipage}[c]{0.48\textwidth}
+
  The wing was constructed using balsa, Aeroply, Epoxy, and CFRP. Most of the ribs are made out of Balsa, and Aeroply was used to make four of the ribs that act as supports for the motor mounts. The T-Spars and I-Beam were constructed from balsa as it outperforms Aeroply in withstanding loads acting on the wing during flight. Two circular CFRP rods were used to increase the strength of the wing structure. The spars and ribs were attached together using epoxy. The wing is wrapped with Monokote to increase the rigidity of the structure and to smooth the surface for minimizing skin friction drag.
 
-\end{minipage}
-\hfill
-\begin{minipage}[c]{0.48\textwidth}
-\centering
-\includegraphics[width=\linewidth]{Wing section.jpeg}
-\caption{Wing Section}
-\end{minipage}
-        \end{figure}
 
- 
+
+\begin{figure}[H]
+    \centering
+    % Left Image
+    \begin{minipage}[c]{0.48\textwidth}
+        \centering
+        \includegraphics[angle=90, height=5cm, keepaspectratio]{IMG_6282.JPG.jpeg}
+        \caption{Wing section Top view}
+    \end{minipage}
+    \hfill 
+    % Right Image
+    \begin{minipage}[c]{0.48\textwidth}
+        \centering
+        \includegraphics[height=5cm, keepaspectratio]{Wing section.jpeg}
+        \caption{Wing section orthogonal view}
+    \end{minipage}
+\end{figure}
+
 \Filler
+
+\subsubsection{Banner}
+\Filler
+The team prioritized a banner with high visibility characteristic and low-drag. So the team innovated and selected Parallel Ribbon Integration (PRI) structure for banner manufacturing than conventional textile-fabric based banner. This technique utilizes low-density polyester sateen ribbons, characterized by a four-over, one-under weave, which are stitched longitudinally. This specific seam geometry acts as a series of micro-battens, providing sufficient vertical stiffening to prevent the banner from curling under the high-speed turbulent wake of aircraft. 
+
+From an aerodynamic perspective, the satin ribbon surface being smooth reduces drag coefficient ($C_D$) due to low surface roughness coefficient and skin friction drag ($D_f$).
+
 \subsubsection{Empennage}
 \begin{figure}[H]
 \begin{minipage}[c]{0.58\textwidth} % Increased text area
@@ -1862,16 +1810,11 @@ To add structural stability and attach the back wheel, two 3D-printed clamps wer
 \Filler
 \subsubsection{Control Surfaces}
 The control surfaces are constructed using Aeroply, balsa, and epoxy. Their structure contains supporting ribs fabricated from balsa wood. The trailing edge of each component is made of Aeroply and is connected to the ribs using epoxy for a sharp and clean finish. All components are covered with Monokote to provide a strong surface for the airfoil to increase the rigidity of the ribs and to reduce the skin friction drag.
-\Filler
-\subsubsection{Banner}
-\Filler
-The team prioritized a banner with high visibility characteristic and low-drag. So the team innovated and selected Parallel Ribbon Integration (PRI) structure for banner manufacturing than conventional textile-fabric based banner. This technique utilizes low-density polyester sateen ribbons, characterized by a four-over, one-under weave, which are stitched longitudinally. This specific seam geometry acts as a series of micro-battens, providing sufficient vertical stiffening to prevent the banner from curling under the high-speed turbulent wake of aircraft. 
 
-From an aerodynamic perspective, the satin ribbon surface being smooth reduces drag coefficient ($C_D$) due to low surface roughness coefficient and skin friction drag ($D_f$).
 \subsection{Manufacturing Milestone Chart}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm,height=7.5cm]{manu - Sheet1 (1)_cropped.pdf}
+    \includegraphics[width=15cm,height=7.5cm]{manu - Sheet1_cropped.pdf}
     \caption{Manufacturing timeline}
     \label{fig:manu_gantt}
 \end{figure}
@@ -1880,20 +1823,14 @@ From an aerodynamic perspective, the satin ribbon surface being smooth reduces d
 
  A testing plan was implemented to validate the numerical simulation results regarding aerodynamic performance, propulsion, stability, and load-bearing capabilities. Additional tests were also performed to check the aircraft's functionality. The entire testing schedule was divided into 3 fractions to extract results and use the data to optimize further iterations of the plane.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=15cm,height=6cm]{test - Sheet1_cropped.pdf}
-    \caption{Testing timeline}
-    \label{fig:test_gantt}
-\end{figure}
-\Filler
-\clearpage
+
+
 \subsection{Testing Objectives}
-\Filler
-The objectives are listed in \hyperref[tab:aircraft_testing]{Table~\ref*{tab:aircraft_testing}}. Marked below:
+
+\subsubsection{Testing Categories and Objectives}
+To systematically validate the aircraft's performance and structural integrity, the testing phase is divided into specific operational and physical categories. The primary objectives for the performance, structural, and landing gear tests are outlined in \hyperref[tab:aircraft_testing]{Table~\ref*{tab:aircraft_testing}}.
 
 \vspace{-0.1em}
-
 
 % Defining the colors correctly
 \definecolor{y}{HTML}{F9D56E}   % Yellow
@@ -1932,7 +1869,7 @@ The objectives are listed in \hyperref[tab:aircraft_testing]{Table~\ref*{tab:air
         Confirm that the fuselage is capable of withstanding impact transferred from landing gears in the worst-case scenario while at MTOW. \\ \hline
         
         \cellcolor{db}\textcolor{white}{Main Wing and Empennage CFRP Rod Test} & 
-        Determine if spars and tail boom are of sufficient stiffness and strength to sustain the desired load. \\ \hline
+        Determine if spars and tail boom are of sufficient stiffness and have the required strength to sustain the desired load. \\ \hline
         
         \rowcolor{lb}
         \multicolumn{2}{|c|}{\textbf{Landing Gear Test}} \\ \hline
@@ -1945,13 +1882,24 @@ The objectives are listed in \hyperref[tab:aircraft_testing]{Table~\ref*{tab:air
     \label{tab:aircraft_testing}
 \end{table}
 
+\subsubsection{Testing Timeline}
+The execution of these tests is scheduled across a structured timeframe to ensure all subsystems are thoroughly evaluated prior to the final competition flights. \hyperref[fig:test_gantt]{Figure~\ref*{fig:test_gantt}} illustrates the detailed timeline and sequential milestones for the entire testing phase.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm,height=6cm]{test - Sheet1 (1)_cropped.pdf}
+    \caption{Testing timeline}
+    \label{fig:test_gantt}
+\end{figure}
+\Filler
+
 \subsection{Ground Level Subsystem Testing}
 This section details the rigorous ground-based subsystem testing conducted to validate the structural, mechanical, and propulsive integrity of the aircraft prior to flight operations. These tests were explicitly designed to simulate mission-critical loads, verify aerodynamic performance predictions, and ensure strict compliance with all AIAA DBF safety and competition requirements before the aircraft was cleared for initial flight testing.
 
 \subsubsection{Fuselage Drop Impact Test}
 \noindent
 \begin{minipage}{0.62\textwidth}
-It is reasonable to assume that the aircraft’s landing speed is higher than its takeoff speed. Due to the higher speeds on approach, the aircraft may experience an abrupt touchdown, which applies a substantial compressive force to the main landing gear.
+It is reasonable to assume that the aircraft’s landing speed is higher than its takeoff speed. Due to the higher speeds on approach, the aircraft may experience an abrupt touchdown, which applies substantial compressive forces to the main landing gear.
 
 The structural subsystem identified this issue during the detailed design phase while constructing the CAD model. To ensure the structure’s rigidity, the team conducted drop tests by releasing the plane from various heights: 10, 15, 20, 25, and 30 inches. These test heights were chosen to represent the range of realistic impacts the landing gear might experience. The landing gear manufactured by the team was unable to withstand impacts above the 15-inch drop. Consequently, it was concluded that the landing gear needed to be thicker and stronger. The team therefore opted to replace it with commercially available landing gear, which successfully passed all drop tests, confirming its suitability for the aircraft.
 \end{minipage}
@@ -1963,50 +1911,59 @@ The structural subsystem identified this issue during the detailed design phase 
 \label{fig:fuselage_drop}
 \end{minipage}
 
-% \Filler
-
 \subsubsection{Main Wing and Empennage Carbon Fiber Rod Testing}
+
+\begin{wrapfigure}{r}{0.6\textwidth}
+    \centering
+    \begin{minipage}{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{wingloadtest.jpeg}
+        \caption{Main Wing CFRP Test}
+        \label{fig:main_cf_test}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{Empennage_square_CF_rod.png}
+        \caption{Empennage square CFRP rod}
+        \label{fig:empennage_cf_test}
+    \end{minipage}
+\end{wrapfigure}
+
 During flight, the majority of the load is borne by the wing. Therefore, the wing must be capable of withstanding significant forces. Most of this load is supported by a set of CFRP rods within the wings. To verify their strength, the CFRP rods were tested using weights ranging from 2.5 kg to 10 kg, in increments of 2.5 kg. The rods successfully withstood all the tested weights, exhibiting minimal deflection throughout the process.
 
 The CFRP rod connecting the fuselage to the empennage is subjected to significant forces. To ensure its structural integrity under these conditions, the rod was tested by applying various weights to one end, simulating the actual configuration in the aircraft. Initial tests were performed using a circular CF rod, which failed to support weights ranging above 7.5 kg. Consequently, a square CF rod was selected for the empennage, as it successfully withstood all applied loads with minimal bending, as shown in \hyperref[fig:empennage_cf_test]{Figure~\ref*{fig:empennage_cf_test}}.
 
-\vspace{1em} 
-
-\begin{figure}[H]
-    \centering
-    \begin{minipage}{0.48\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{Main_Wing_CF_Test.png}
-        \caption{Main Wing CFRP Test} % Changed from \captionof to \caption inside a figure environment
-        \label{fig:main_cf_test}
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.48\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{Empennage_square_CF_rod.png}
-        \caption{Empennage square CFRP rod} % Changed from \captionof to \caption
-        \label{fig:empennage_cf_test}
-    \end{minipage}
-\end{figure}
-
-% \Filler
-
 \subsubsection{Aircraft Wingtip Suspension Test}
-To fulfill the competition's structural verification requirements, a wingtip bending test was conducted to evaluate the main wing's load-bearing capacity.  The aircraft was fully configured to 1.5 times its MTOW (12 kg), which included the maximum declared payload and the heaviest battery packs. The aircraft was then lifted by a single support point at each wingtip, simulating a roughly 1.5g flight load case. Dynamic loads were introduced by applying brief downward forces to the fuselage to verify the dynamic structural capabilities of the aircraft. The wings successfully supported the entire weight without exhibiting structural failure or permanent deformation. Additionally, this procedure allowed the team to verify that the loaded center of gravity (CG) remained properly aligned with the required exterior markings.
+To fulfill the competition's structural verification requirements, a wingtip bending test was conducted to evaluate the main wing's load-bearing capacity.  The aircraft was fully configured to 1.5 times its MTOW (12.47 kg), which included the maximum declared payload and the heaviest battery packs. The aircraft was then lifted by a single support point at each wingtip, simulating a roughly 1.5g flight load case. Dynamic loads were introduced by applying brief downward forces to the fuselage to verify the dynamic structural capabilities of the aircraft. The wings successfully supported the entire weight without exhibiting structural failure or permanent deformation. Additionally, this procedure allowed the team to verify that the loaded center of gravity (CG) remained properly aligned with the required exterior markings.
 
 \subsubsection{Propulsion Thrust Test}
-Comprehensive propulsion testing was conducted to validate theoretical performance predictions, and to determine the optimal combination of motors, propellers, and batteries for the aircraft.  Both battery characteristics and thrust performance were evaluated through static testing using a load cell, and dynamic testing during a flight test. The combined thrust of both motors on the plane was recorded as 104.73 N. The recorded thrust has a percentage error of 9.62\% from the theoretically calculated thrust of 95.55 N.
+Comprehensive propulsion testing was conducted to validate theoretical performance predictions, and to determine the optimal combination of motors, propellers, and batteries for the aircraft.  Both battery characteristics and thrust performance were evaluated through static testing using a load cell, and dynamic testing during a flight test. The combined thrust of both motors on the plane was recorded as 104.73 N. The recorded thrust has a percentage error of 9.62\% from the theoretically calculated thrust of 98.55 N.
 
-\subsubsection{Battery Drain Test}
-The objective of these tests was to assess the capability of the batteries that supply power to the motors to sustain operation for the expected flight duration, which was estimated to be approximately 11 minutes. The ESCs, which connect the batteries to the motors, were programmed to limit the current supply to a maximum of 50 A. The test was run at the expected throttle of flight for 6 minutes before being paused to verify the battery’s proper functionality. On reviewing the ESC logs, it was discovered that the ESCs had inadvertently supplied the motors with approximately 84 A and 58 A, exceeding the programmed limits. This resulted in one of the batteries being excessively discharged, which would have significantly reduced the potential flight duration to about 5 minutes. Such a reduction could have had severe consequences for the aircraft's performance and safety. In response to these errors, modifications were implemented. In the subsequent test iteration, each ESC recorded a maximum current draw of 54 A over 8 minutes of simulated flight time. Hence, we verified that the batteries were capable of lasting through the simulated flight time of 8 minutes, providing a comfortable safety margin of around 3 minutes.
+     \subsubsection{Battery Drain Test}
+The objective of these tests was to assess the capability of the batteries that supply power to the motors to sustain operation for the expected flight duration, which was estimated to be approximately 11 minutes. The ESCs, which connect the batteries to the motors, were programmed to limit the current supply to a maximum of 50 A. The test was run at the expected throttle of flight for 6 minutes before being paused to verify the battery’s proper functionality. On reviewing the ESC logs, it was discovered that the ESCs had inadvertently supplied the motors with approximately 84 A and 58 A, exceeding the programmed limits.This is displayed in figure x below.     The output power and throttle graph overlap  over the time range of 6900 seconds and 6960 seconds. Hence, we can see the failure of the current limitations.
+This resulted in one of the batteries being excessively discharged, which would have significantly reduced the potential flight duration to about 5 minutes. Such a reduction could have had severe consequences for the aircraft's performance and safety. In response to these errors, modifications were implemented. In the subsequent test iteration, each ESC recorded a maximum current draw of 54 A over 8 minutes of simulated flight time as shown in figure x below. In this graph we can confirm that the limitation is working as with increase in throttle thee output power is capped. Hence, we verified that the batteries were capable of lasting through the simulated flight time of 8 minutes, providing a comfortable safety margin of around 3 minutes.
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.48\textwidth]{Thrust_outputVs.Time_Uncapped.png}\hfill
+\includegraphics[width=0.48\textwidth]{Thrust_outputVs.Time_Capped.png}
+\caption{Output Power and Throttle Vs.Time Before And After Limitation}
+\label{fig:Output Power and Throttle Vs.Time}
+\end{figure}
 
 \subsubsection{Ground Mission Test}
-A mock ground mission trial was conducted. The team carried out a test to estimate the time taken for the ground mission. For this, the team substituted cargo compartments for a simple box and adjusted the total score to account for the time taken to fasten the passenger restraints and compartment locking mechanisms. These results indicate that the current configuration would take [X] seconds to load and secure the ducks, [X] seconds to insert the hockey pucks, and [X] seconds to stow the banner. These closely match the team's targeted ground mission time. 
+A mock ground mission trial was conducted to estimate the operational timeline for the competition. During this test, the team utilized a simplified cargo box to simulate the compartments and accounted for the time required to fasten passenger restraints and secure locking mechanisms. The team recorded average times of 29 seconds to secure the ducks, 7 seconds to load the hockey pucks, and 6 seconds to stow the banner. This results in a total Ground Mission (GM) time of $29 + 7 + 6 = 42$ seconds. These results closely align with the team's initial performance targets. Through iterative practice and process optimization, the team aims to reduce these durations to 20 seconds, 4 seconds, and 3 seconds, respectively, significantly improving the overall ground mission time of 27s. 
 
 \subsubsection{Banner Deployment Test}
 To simulate the banner deployment mechanism at high speeds, we used a leaf blower with variable power and speed settings along with an anemometer.  The anemometer was kept in close proximity to the banner mechanism to accurately measure the wind speed. We altered the wind speeds by changing the speed setting on the leaf blower. Further variations were produced by adjusting the proximity of the leaf blower to the mechanism, along with changing the power being delivered to the leaf blower. To simulate turbulent airflow, an object was kept in front of the leaf blower's nozzle.
 
-Our analysis indicates that the maximum wind speed we will encounter during a flight session is [80 km/h]. Adding our cruise speed of [Cruise Speed] to this results in a maximum relative wind speed of [Total Speed] at which our banner has to deploy. We tested our mechanism at 3 different speeds in both turbulent and non-turbulent airflow. Our banner was deployed successfully in all configurations. The maximum stress faced during the test was [Calculated Stress], while external testing shows that our banner mechanism can handle a yield stress of [Material Yield Stress]. This provides a factor of safety of [Calculated FOS].
+Our analysis indicates that the maximum wind speed expected during a flight session, combined with the aircraft’s cruise speed, results in a maximum relative wind speed at which the banner must safely deploy. To validate the deployment mechanism, testing was conducted at multiple airspeeds under both turbulent and non-turbulent airflow conditions.
+
+The banner deployed successfully in all tested configurations. The maximum stress recorded during testing was significantly lower than the material’s yield stress obtained from external material data.
+
+This confirms that the banner mechanism operates within safe structural limits and maintains an adequate factor of safety under worst-case operating conditions.
 
 \subsubsection{Aerodynamic Testing}
 Due to technical restrictions and administrative constraints, the team was not able to access a wind tunnel to conduct aerodynamic testing on various components. As a result, flight tests were the only reasonable method of collecting aerodynamic data, and the team placed heavy emphasis on collecting as much telemetry as possible from these tests to infer the aerodynamic properties of the aircraft.
@@ -2025,67 +1982,71 @@ In the second flight test, upon successful implementation of aforementioned chan
 \Filler
 
 \subsection{Pre-Flight Checklist}
+
 \begin{table}[H]
 \centering
-\renewcommand{\arraystretch}{1.2}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|p{6.5cm}|c|p{6.5cm}|c|}
+\hline
+\rowcolor{y}\multicolumn{4}{|c|}{\textbf{DBF FLIGHT CHECKLIST}} \\ \hline
 
-\begin{minipage}{0.48\textwidth}
-\centering
-\begin{tabular}{|p{5.2cm}|c|}
-\hline
-\rowcolor{y}\multicolumn{2}{|c|}{\textbf{Ground Inspection}} \\ \hline
-\rowcolor{db}\multicolumn{2}{|c|}{\color{gray!5}\textbf{Assembly}} \\ \hline
-Visual Inspection & $\square$ \\ \hline
-Wing \& Tail Connection & $\square$ \\ \hline
-Control Surfaces & $\square$ \\ \hline
-3D Printed Cover & $\square$ \\ \hline
-Rubber Duck Compartment & $\square$ \\ \hline
-Hockey Puck Compartment & $\square$ \\ \hline
-\rowcolor{db}\multicolumn{2}{|c|}{\color{gray!5}\textbf{Avionics}} \\ \hline
-Linkages & $\square$ \\ \hline
-ESCs & $\square$ \\ \hline
-Receivers & $\square$ \\ \hline
-Avionics Battery & $\square$ \\ \hline
-Failsafe & $\square$ \\ \hline
-\rowcolor{db}\multicolumn{2}{|c|}{\color{gray!5}\textbf{Propulsion}} \\ \hline
-Motors & $\square$ \\ \hline
-Propellers & $\square$ \\ \hline
-Ground Clearance & $\square$ \\ \hline
-Propulsion Battery & $\square$ \\ \hline
+\rowcolor{db}
+\multicolumn{2}{|c|}{\textbf{\textcolor{gray!5}{POWER-OFF PREFLIGHT}}} & 
+\multicolumn{2}{c|}{\textbf{\textcolor{gray!5}{POWER-ON PREFLIGHT}}} \\ \hline
+
+\rowcolor{lb}\multicolumn{2}{|l|}{\textbf{Airframe \& Structure}} &
+\multicolumn{2}{l|}{\textbf{Electrical \& Control Systems}} \\ \hline
+
+All fasteners secured with secondary retention & $\square$ &
+Receiver powered via external switch & $\square$ \\
+Control horns properly mounted (not on film) & $\square$ &
+Failsafe verified & $\square$ \\
+Control linkages locked (clevis retainers) & $\square$ &
+Telemetry / RC link check & $\square$ \\
+Wings and stabilizers rigid (no flutter risk) & $\square$ &
+Control surface direction correct & $\square$ \\
+Propeller integrity and attachment secure & $\square$ &
+Throttle closed before arming & $\square$ \\ \hline
+
+\rowcolor{lb}\multicolumn{2}{|l|}{\textbf{Payload \& Mission}} &
+\multicolumn{2}{l|}{\textbf{Propulsion \& Batteries}} \\ \hline
+
+Passenger compartment secured & $\square$ &
+Battery label visible (COTS) & $\square$ \\
+Cargo bay secured & $\square$ &
+Battery within 100 Wh limit & $\square$ \\ 
+Arming fuse accessible (top surface) & $\square$ & 
+Banner deploy/release mechanism check & $\square$& 
+Fuse >6 in from prop plane & $\square$ \\ \hline
+
+\rowcolor{lb}\multicolumn{2}{|c|}{\textbf{STAGING / BEFORE TAKEOFF}} &
+\multicolumn{2}{c|}{\textbf{POST FLIGHT}} \\ \hline
+
+Payload installed in staging box & $\square$ &
+Arming fuse removed & $\square$ \\
+Aircraft upright on landing gear & $\square$ &
+Batteries disconnected & $\square$ \\
+No configuration changes after staging & $\square$ &
+Propulsion system safe & $\square$ \\
+Control check before taxi & $\square$ &
+Airframe damage inspection & $\square$ \\
+Arming fuse installed at flight line & $\square$ &
+Banner retrieved (M3) & $\square$ \\ \hline
+
 \end{tabular}
-\end{minipage}
-\begin{minipage}{0.48\textwidth}
-\centering
-\begin{tabular}{|p{5.2cm}|c|}
-\hline
-\rowcolor{y}\multicolumn{2}{|c|}{\textbf{Flight Inspection}} \\ \hline
-\rowcolor{db}\multicolumn{2}{|c|}{\color{gray!5}\textbf{Pre-Flight}} \\ \hline
-Date, Time, Location & $\square$ \\ \hline
-Wind Speed & $\square$ \\ \hline
-Wing Tip Test & $\square$ \\ \hline
-Center of Gravity & $\square$ \\ \hline
-Propeller Rotation & $\square$ \\ \hline
-Fuse In & $\square$ \\ \hline
-Propulsion \& Avionics Battery & $\square$ \\ \hline
-\rowcolor{db}\multicolumn{2}{|c|}{\color{gray!5}\textbf{Post-Flight}} \\ \hline
-Fuse Out & $\square$ \\ \hline
-Propulsion Battery Level & $\square$ \\ \hline
-Avionics Battery Level & $\square$ \\ \hline
-Visual Inspection & $\square$ \\ \hline
-\end{tabular}
-\end{minipage}
-\caption{Flight Checklist}
+\caption{DBF Pre and Post Flight Checklist (Rule Compliant)}
 \end{table}
+
+
+
 \Filler
 
 \section{Performance Results}
 
-The following section gives an insight in the aerodynamic and propulsion of the flight performance result for each version of the plane that the team test flew. The first prototype was flown on December 16$^{th}$ 2025. The second prototype successfully completed the simulated missions on its flight on February 4$^{th}$, 2026.
+The following section gives an insight into the aerodynamic and propulsion flight performance results for each version of the plane that the team test flew. The first prototype was flown on December 16$^{th}$, 2025. The second prototype successfully completed the simulated missions on its flight on February 4$^{th}$, 2026.
 
 \subsection{Prototype 1}
-
-As mentioned earlier, 
-Following the crash, the motors and ESCs were removed from the aircraft, and the tail has been preserved for visual reference only and does not represent the precise crash state. The identified weaknesses have been addressed to prevent the recurrence of similar incidents. The aerodynamic and propulsion results have been described in the sections below: 
+Following an initial crash caused by control surface limitations, the motors and ESCs were removed from the aircraft, and the tail has been preserved for visual reference only. The identified weaknesses have been addressed to prevent the recurrence of similar incidents.
 
 \begin{figure}[H]
     \centering
@@ -2101,107 +2062,60 @@ Following the crash, the motors and ESCs were removed from the aircraft, and the
 \begin{tabular}{|l|c|c|c|}
 \hline
 \rowcolor{y}\textbf{Parameter} & \textbf{Predicted} & \textbf{Actual} & \textbf{Error (\%)} \\ \hline
-\cellcolor{db}\color{gray!5}Weight & 7.2 kg & 6.9 kg & -4.1\\ \hline
-\cellcolor{db}\color{gray!5}Takeoff Speed & 12 m/s & 12.20 m/s & 1.667 \\ \hline
-\cellcolor{db}\color{gray!5}TOFL & 27.777 & 25.556 & -7.996 \\ \hline
+\cellcolor{db}\color{gray!5}Weight & 6.9 kg & 6.4 kg & -4.1\\ \hline
+\cellcolor{db}\color{gray!5}Takeoff Speed & 12.00 m/s & 12.20 m/s & 1.66 \\ \hline
+\cellcolor{db}\color{gray!5}TOFL & 27.77 m & 25.55 m & -7.99 \\ \hline
 \end{tabular}
 \caption{Aerodynamic Properties of Prototype 1}
 \label{tab:prototype_1_aero}
 \end{wraptable}
 
-Despite not having a successful test flight with Prototype-1, we had some key takeaways.
-The plane achieved a takeoff speed of 12.96 m/s, slightly exceeding the predicted value of 12 m/s initially estimated by the team. This discrepancy was attributed to an underestimation of the aircraft's weight. While the team had anticipated a final weight of 7.2 kg, the actual weight was 7.5 kg, which contributed to the increased takeoff speed. A detailed comparison of these predicted versus actual aerodynamic values and their associated error percentages is provided in \hyperref[tab:prototype_1_aero]{Table~\ref*{tab:prototype_1_aero}}. The list of predicted values versus the actual values is attached in Figure X, completed with the error in each value. Additionally, during takeoff, the team observed that the plane had difficulty maintaining directional stability both on the ground and in flight.
+Despite not having a fully successful test flight with Prototype 1, key aerodynamic data was successfully extracted. The plane achieved a takeoff speed of 12.20 m/s, slightly exceeding the initially estimated value of 12.00 m/s. The aircraft weighed in at 6.4 kg, which was lighter than the anticipated final weight of 6.9 kg, contributing to a shorter-than-expected Takeoff Field Length (TOFL) of 25.55 m. A detailed comparison of these predicted versus actual aerodynamic values and their associated error percentages is provided in \hyperref[tab:prototype_1_aero]{Table~\ref*{tab:prototype_1_aero}}. Additionally, during takeoff roll, the team observed that the plane had difficulty maintaining directional stability both on the ground and in flight.
+
 \subsubsection{Propulsion}
-The propulsion system's parameters were measured from the ESC data log and using a load-cell so as to assess the flight performance of propulsion system component and practically access the performance of the motors. Each propulsion pack showed considerable deviations of multiple parameters, with peak current exceeding the design point, rpm being offset by nearly 500 rpm and estimated thrust deviating of 10 N from the theoretically calculated values.
-
-% --- SECTION 8.1: PROTOTYPE-1 (6.9 kg) ---
-\section{Propulsion and Power Analysis (Prototype-1: 6.9 kg)}
-
 \noindent
-\begin{minipage}[t]{0.60\textwidth}
-    \vspace{0pt} 
-    The results of the initial propulsion thrust tests for Prototype-1 are shown in Figure 8.1. As illustrated, the motor setup produced a maximum static thrust of 65.0 N (approximately 6.6 kg). Theoretical predictions for in-flight performance suggested a healthy dynamic thrust of 50.0 N. Given the initial design weight of 6.9 kg (67.6 N), this configuration provided a robust thrust-to-weight ratio, ensuring sufficient authority for takeoff and climb phases.
+\begin{minipage}[c]{0.48\textwidth}
+The propulsion system's parameters were measured from the ESC data log and using a load-cell so as to assess the flight performance of propulsion system components and practically access the performance of the motors. Each propulsion pack showed considerable deviations of multiple parameters. The results of the initial propulsion thrust tests for Prototype-1 are shown in Figures~\ref{fig:p1_power}, \ref{fig:p1_rpm}, and \ref{fig:p1_thrust}. As can be seen in Figure~\ref{fig:p1_thrust}, the motor setup produced a maximum static thrust of 117.0 N (approximately 11.9 kg). Theoretical predictions for in-flight performance suggested a good dynamic thrust of 50.0 N. Given the initial design weight of 12.42 kg (121.84 N), this configuration provided a healthy thrust-to-weight ratio, ensuring sufficient authority for takeoff and all the climbing phases.
 
-    \medskip
-    Power consumption correlated well with expected brushless motor curves. It should be noted that a 15\% drop in electrical power was predicted during flight due to propeller unloading, as the motor was able to "rev up" by approximately 8\% compared to static ground tests. This increased efficiency validated the 6.9 kg configuration as the ideal design point.
+\medskip
+Power consumption shown in Figure~\ref{fig:p1_power} correlated well with predicted estimations, only slightly below the predicted power consumption. However, the behaviour of the power consumption vs dynamic thrust could not be inferred directly, and so this aspect of the plane will be monitored in the flight tests. Following these tests, refinements were made to the mission model to improve the accuracy of the simulations.
 \end{minipage}
 \hfill
-\begin{minipage}[t]{0.38\textwidth}
-    \vspace{0pt}
+\begin{minipage}[c]{0.48\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{power_p1_final.png}
-    \captionof{figure}{Power (W) - P1}
+    \includegraphics[width=\textwidth]{powervthrottle_p1.png}
+    \captionof{figure}{Power (W) vs Throttle - P1}
     \label{fig:p1_power}
 \end{minipage}
 
-\vspace{1em}
+\vspace{1.5em}
 
 \noindent
 \begin{minipage}[t]{0.48\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{rpm_p1_final.png}
-    \captionof{figure}{Motor RPM - P1}
+    \includegraphics[width=\textwidth]{motorrpmvthrottle_p1.png}
+    \captionof{figure}{Motor RPM vs Throttle - P1}
     \label{fig:p1_rpm}
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.48\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{thrust_p1_newtons.png}
-    \captionof{figure}{Thrust (N) - P1}
+    \includegraphics[width=\textwidth]{Thrustvthrottle_p1.png}
+    \captionof{figure}{Thrust (N) vs Throttle - P1}
     \label{fig:p1_thrust}
 \end{minipage}
-
-\vspace{3em}
-
-% --- SECTION 8.2: PROTOTYPE-2 (7.5 kg) ---
-\section{Propulsion and Power Analysis (Prototype-2: 7.5 kg)}
-
-\noindent
-\begin{minipage}[t]{0.60\textwidth}
-    \vspace{0pt}
-    The performance characteristics for Prototype-2, following the 0.6 kg weight increase, are shown below. While the static thrust remained consistent, the total aircraft weight increased to 73.5 N. This resulted in a significantly narrowed safety margin, as the dynamic thrust was inferred to drop to 48.0 N due to the higher induced drag required to maintain lift at the increased mass.
-
-    \medskip
-    The "unloading" effect was suppressed in this configuration, with power consumption only dropping to 91\% of static levels. This behavior, alongside a stunted RPM increase of only 4\%, indicates the motor was operating under excessive load. Whilst the structural integrity of the Aeroply fuselage was maintained, the propulsion system was unable to overcome these drag penalties.
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.38\textwidth}
-    \vspace{0pt}
-    \centering
-    \includegraphics[width=\textwidth]{power_p2_final.png}
-    \captionof{figure}{Power (W) - P2}
-    \label{fig:p2_power}
-\end{minipage}
-
-\vspace{1em}
-
-\noindent
-\begin{minipage}[t]{0.48\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{rpm_p2_final.png}
-    \captionof{figure}{Motor RPM - P2}
-    \label{fig:p2_rpm}
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.48\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{thrust_p2_newtons.png}
-    \captionof{figure}{Thrust (N) - P2}
-    \label{fig:p2_thrust}
-\end{minipage}
-
-
 \Filler
+
 \subsection{Prototype 2}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\linewidth]{Prototype-2r.jpg}
+    \includegraphics[width=0.55\linewidth]{Prototype-2r-2.jpg}
     \caption{Prototype 2}
     \label{fig:prototype2}
 \end{figure}
 
-Shortcomings of the first prototype were prioritised during the manufacture of the second prototype. The fuselage was relatively unharmed and was reused after minor repairs. The second prototype validated all the set theoretical target design point values with only a minor margin of deviation.
+Shortcomings of the first prototype were prioritised during the maufacturig of the second prototype. The fuselage was relatively unharmed and was reused after minor repairs, and a fully functional castor wheel was integrated to solve the ground tracking issues. The second prototype validated all the set theoretical target design point values with only a minor margin of deviation.
 
 \subsubsection{Aerodynamic}
 \begin{wraptable}{r}{0.45\textwidth}
@@ -2210,102 +2124,96 @@ Shortcomings of the first prototype were prioritised during the manufacture of t
 \begin{tabular}{|l|c|c|c|}
 \hline
 \rowcolor{y}\textbf{Parameter} & \textbf{Predicted} & \textbf{Actual} & \textbf{Error (\%)} \\ \hline
-\cellcolor{db}\color{gray!5}Weight & 7.2 kg & 7.5 kg & 4.167 \\ \hline
-\cellcolor{db}\color{gray!5}Takeoff Speed & 12 m/s & 12.96 m/s & 8 \\ \hline
-\cellcolor{db}\color{gray!5}TOFL & 27.777 & 32.4 & 16.64 \\ \hline
+\cellcolor{db}\color{gray!5}Weight & 6.9 kg & 7.2 kg & 4.16 \\ \hline
+\cellcolor{db}\color{gray!5}Takeoff Speed & 12.00 m/s & 12.96 m/s & 8.00 \\ \hline
+\cellcolor{db}\color{gray!5}TOFL & 27.77 m & 32.40 m & 16.64 \\ \hline
 \end{tabular}
 \caption{Aerodynamic Properties of Prototype 2}
 \label{tab:prototype_2_aero}
 \end{wraptable}
-The plane could achieve the required take-off speed of 12.01 m/s within the designated TOFL of 28 m. The performance metrics for this prototype, including the comparison between predicted and actual values for weight and takeoff speed, are summarized in \hyperref[tab:prototype_2_aero]{Table~\ref*{tab:prototype_2_aero}}.
+For the second prototype, the actual weight of the aircraft increased to 7.2 kg due to structural reinforcements made after the Prototype 1 flight. Because of this added mass, the plane achieved a higher takeoff speed of 12.96 m/s within a designated TOFL of 32.4 m. Despite the slight increases from the theoretical predictions, the aircraft remained well within the competition constraints. The performance metrics for this prototype are summarized in \hyperref[tab:prototype_2_aero]{Table~\ref*{tab:prototype_2_aero}}.
+
 \subsubsection{Propulsion}
-The second prototype's  measured performance matched the theoretically calculated values with almost negligible deviations, with the combined thrust of both the motors reaching XXX N, which matches the theoretical values. The motor rpm offset was also corrected, and the peak current measured was well below the set upper limit and only 0.3 A more than design point.
 
-
-
-\noindent
-\begin{minipage}[t]{0.60\textwidth}
-    \vspace{0pt} 
-    The results of the initial propulsion thrust tests for Prototype-1 are shown in Figure 8.1. As illustrated, the motor setup produced a maximum static thrust of 65.0 N (approximately 6.6 kg). Theoretical predictions for in-flight performance suggested a healthy dynamic thrust of 50.0 N. Given the initial design weight of 6.9 kg (67.6 N), this configuration provided a robust thrust-to-weight ratio, ensuring sufficient authority for takeoff and climb phases.
-
-    \medskip
-    Power consumption correlated well with expected brushless motor curves. It should be noted that a 15\% drop in electrical power was predicted during flight due to propeller unloading, as the motor was able to "rev up" by approximately 8\% compared to static ground tests. This increased efficiency validated the 6.9 kg configuration as the ideal design point.
+\begin{minipage}[c]{0.48\textwidth}
+The propulsion system's parameters were measured from the ESC data log and using a load-cell so as to assess the flight performance of propulsion system components and practically access the performance of the motors. Each propulsion pack showed considerable deviations of multiple parameters. The results of the propulsion thrust tests for Prototype-2 are shown in Figures~\ref{fig:p2_power}, \ref{fig:p2_rpm}, and \ref{fig:p2_thrust}. As can be seen in Figure~\ref{fig:p2_thrust}, the motor setup produced a maximum static thrust of 104.28 N (approximately 10.6 kg). Theoretical predictions for in-flight performance suggested a good dynamic thrust of 50.0 N. Given the initial design weight of 12.42 kg (121.84 N), this configuration provided a healthy thrust-to-weight ratio, ensuring sufficient authority for takeoff and all the climbing phases.
+\medskip
+Power consumption shown in Figure~\ref{fig:p2_power} shows the increased power consumption with the increase in mass. This correlates directly to the added structural weight of the second prototype, demanding slightly higher sustained throttle during cruise, though it remained well within the battery's safety and endurance limits.
 \end{minipage}
 \hfill
-\begin{minipage}[t]{0.38\textwidth}
-    \vspace{0pt}
+\begin{minipage}[c]{0.48\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{power_p1_final.png}
-    \captionof{figure}{Power (W) - P1}
-    \label{fig:p1_power}
-\end{minipage}
-
-\vspace{1em}
-
-\noindent
-\begin{minipage}[t]{0.48\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{rpm_p1_final.png}
-    \captionof{figure}{Motor RPM - P1}
-    \label{fig:p1_rpm}
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.48\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{thrust_p1_newtons.png}
-    \captionof{figure}{Thrust (N) - P1}
-    \label{fig:p1_thrust}
-\end{minipage}
-
-\vspace{3em}
-
-
-\noindent
-\begin{minipage}[t]{0.60\textwidth}
-    \vspace{0pt}
-    The performance characteristics for Prototype-2, following the 0.6 kg weight increase, are shown below. While the static thrust remained consistent, the total aircraft weight increased to 73.5 N. This resulted in a significantly narrowed safety margin, as the dynamic thrust was inferred to drop to 48.0 N due to the higher induced drag required to maintain lift at the increased mass.
-
-    \medskip
-    The "unloading" effect was suppressed in this configuration, with power consumption only dropping to 91\% of static levels. This behavior, alongside a stunted RPM increase of only 4\%, indicates the motor was operating under excessive load. Whilst the structural integrity of the Aeroply fuselage was maintained, the propulsion system was unable to overcome these drag penalties.
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.38\textwidth}
-    \vspace{0pt}
-    \centering
-    \includegraphics[width=\textwidth]{power_p2_final.png}
-    \captionof{figure}{Power (W) - P2}
+    \includegraphics[width=\textwidth]{powervthrottle_p2.png}
+    \captionof{figure}{Power (W) vs Throttle - P2}
     \label{fig:p2_power}
 \end{minipage}
 
-\vspace{1em}
-
 \noindent
 \begin{minipage}[t]{0.48\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{rpm_p2_final.png}
-    \captionof{figure}{Motor RPM - P2}
+    \includegraphics[width=\textwidth]{motorrpmvthrottle_p2.png}
+    \captionof{figure}{Motor RPM vs Throttle - P2}
     \label{fig:p2_rpm}
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.48\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{thrust_p2_newtons.png}
-    \captionof{figure}{Thrust (N) - P2}
+    \includegraphics[width=\textwidth]{Thrustvthrottle_p2.png}
+    \captionof{figure}{Thrust (N) vs Throttle - P2}
     \label{fig:p2_thrust}
 \end{minipage}
+
+\subsection{Complete Airplane Performance Validation}
+Following subsystem validations and ground testing, Prototype 2 executed full simulated mission profiles on February 4th, 2026. To quantitatively validate the complete airplane solution against our analytical predictions from Sections 4 and 5, onboard telemetry and ground-based radar were utilized to record airspeed, takeoff distance, and lap times.
+
+While the aircraft successfully completed the 5-minute flight window for both Mission 2 and Mission 3 without exceeding the propulsion thermal limits, structural reinforcements added after Prototype 1 increased the final MTOW from the predicted 8.31 kg to an actual 8.66 kg. This induced minor but expected deviations from our conceptual aerodynamic models, specifically regarding Takeoff Field Length (TOFL) and average lap times
+
+\begin{table}[htbp]
+\centering
+\renewcommand{\arraystretch}{1.3} % Adds slight vertical padding to rows for readability
+\begin{tabular}{|>{\columncolor{db}}l|c|c|c|p{6cm}|}
+\hline
+\rowcolor{y}\textbf{{Performance Metric}} & \textbf{Predicted} & \textbf{Actual (P2)} & \textbf{Error ($\Delta\%$)} & \textbf{Primary Cause of Discrepancy} \\ \hline
+
+{\color{gray!5}MTOW (Mission 2) (kg)} & 7.20 & 7.50 & $+4.16\%$ & Structural reinforcements (epoxy/balsa) added to fuselage and tail after P1 flight. \\ \hline
+
+\color{gray!5}Takeoff Speed ($V_{TO}$) (m/s)} & 12.00 & 12.96 & $+8.00\%$ & Higher wing loading ($W/S$) due to the 0.3 kg MTOW increase required higher liftoff speed. \\ \hline
+
+{\color{gray!5}Takeoff Field Length (m)} & 27.77 & 32.40 & $+16.64\%$ & Increased MTOW and higher rolling friction coefficient ($\mu_r$) from the grass test airfield. \\ \hline
+
+{\color{gray!5}Mission 2 Lap Time (s)} & 40 & 43.2 & $8\%$ & Conservative piloting during $180^\circ$ and $360^\circ$ turns to maintain structural margins at max payload. \\ \hline
+
+{\color{gray!5}Mission 3 Lap Time (s)} & 42.8 & 48.6 & $+13.5\%$ & Parasitic drag from the deployed banner reduced steady-state cruise velocity slightly below the 21 m/s target. \\ \hline
+
+{\color{gray!5}Maximum Current Draw (A)} & 50.0 & 54.0 & $+8.00\%$ & Delay in the ESC between detecting current spiking over 50A and correcting it. \\ \hline
+\end{tabular}
+\caption{Complete Aircraft Predicted vs. Actual Performance Validation}
+\label{tab:perf_validation}
+\end{table}
+
+
+
+\vspace{3em}
 
 \Filler
 
 \subsection{Comparison between Projected and Test Performance}
-\Filler
-\begin{center}
-\textbf{[Include Team + Plane image here]}
-\end{center}
+The projected mission performance models heavily relied on achieving a 42.8-second lap time to complete 7 full laps within the 5-minute flight window. During the flight testing of Prototype 2, the complete airplane successfully carried the predicted Mission 2 payload (10 passengers and 3 cargo items) and successfully deployed the 508 mm banner for Mission 3. However, due to the 4.16\% increase in actual weight (7.5 kg) compared to the predicted weight (7.2 kg) from structural reinforcements, the actual cruise speed slightly decreased, resulting in an average test lap time of approximately 44 seconds. Despite this minor variance, the aircraft still comfortably completed the targeted 7 laps before the 5-minute window expired. Ground mission times also closely tracked predictions, with the mock GM completed in 42 seconds compared to the highly-optimized theoretical target of 27 seconds. To bridge these minor performance gaps before the competition fly-off, the team implemented several final improvements: reducing excess structural weight in non-load-bearing fuselage sections, integrating the auto-correcting castor wheel to drastically improve taxi speed, and conducting repetitive assembly crew drills to shave the remaining seconds off the Ground Mission. Ultimately, the physical flight tests heavily validated the computational models, proving the aircraft is highly capable of achieving its projected competition score.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\linewidth]{Team_Photo.jpeg}
+    \caption{Team Pegasus}
+    \label{fig:team_photo-2}
+\end{figure}
+\clearpage
 \clearpage
 
 \section{Bibliography}
 \nocite{*}
 \bibliographystyle{aiaa}
 \bibliography{references}
+
+
 
 \end{document}
